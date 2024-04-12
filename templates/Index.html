@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Home | Cricket Player Selection App</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+  </head>
+  <body>
+    <section id="navbar" style="font-size: 25px;">
+      <ul>
+        <a href="Index.html"><img class="logo" src="static/logo.png" width="5%" height="auto"></a>
+      </ul>
+    </section>
+    <section id="containers">
+      <h1 style="color: white;margin-right: -15px;font-size: 50px;background-color: green;border-radius: 15px; padding: 5px;">SRI LANKA CRICKET TEAM</h1>
+    </section>
+    <section id="content">
+      <div id="container">
+        <button class="btn" id="leftdiv" type="button" onclick="alert('Rederecting to Player Selection');">
+          <img src="static/player.jpg" alt="Player Picture" class="SecPic"/><br/>
+          <h1>PLAYER SELECTION</h1><br/>
+          <p>In the Player Selection section, users have access to comprehensive player profiles, performance metrics, and comparative 
+            analysis tools, aiding them in the meticulous process of team curation. Detailed player profiles furnish essential statistics,
+             career highlights, and playing styles, facilitating informed decisions. Performance metrics offer a nuanced understanding of 
+             players' strengths and weaknesses, guiding selectors in identifying the ideal candidates for specific roles within the team. 
+             Through comparative analysis, users can juxtapose players across various parameters, ensuring selections align with strategic
+              objectives. Additionally, advanced scouting tools uncover latent talents, enriching the selection process with potential 
+              game-changers. Whether a coach, captain, or selector, this section equips users with the insights needed to forge a formidable
+               cricket team poised for success.</p>
+        </button>
+        <button class="btn" id="rightdiv" type="button" onclick="window.location.href='/Chose';">
+          <img src="static/excer.png" alt="Player Picture" class="SecPic"/><br/>
+          <h1>TRAINING AND EXERCISE</h1><br/>
+          <p>Comprehensive hub designed to elevate cricket players' skills and physical fitness levels. Here, players of all backgrounds and 
+            abilities can access a wide array of resources tailored to enhance their game. Skill-specific drills cater to batting, bowling, 
+            and fielding techniques, ensuring holistic development. Specialized strength and conditioning exercises are available to improve 
+            agility, speed, and power while minimizing injury risks. Customized training programs cater to individual needs, providing 
+            structured routines and progress tracking features. Mental preparation techniques are also covered, helping players develop focus,
+             resilience, and confidence on the field. Whether aiming for professional success or personal improvement, the Training and Exercise
+              section empowers cricket players to unleash their full potential and excel in their sport.</p>
+        </button>
+      </div>
+    </section>
+    <!--FONT AWESOME-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--GOOGLE FONTS-->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet"> 
+</head>
+<body>
+<footer>
+<div class="footer">
+<div class="row">
+<a href="#"><i class="fa fa-facebook"></i></a>
+<a href="#"><i class="fa fa-google"></i></a>
+<a href="#"><i class="fa fa-linkedin"></i></a>
+</div>
+
+<div class="row">
+<ul>
+<li><a href="javascript:void(0);" onclick="navigateToContactUs()">Contact us</a></li>
+<li><a href="javascript:void(0);" onclick="navigateToAbout()">About us</a></li>
+<li><a href="#">Terms & Conditions</a></li>
+</ul>
+</div>
+
+<div class="row">
+Cricket Player Selection App Copyright © 2024 OUSL - All rights reserved || Designed By: Group 6 
+</div>
+</div>
+</footer>
+<script>
+  function navigateToContactUs() {
+      window.location.href = '/Contactus';
+  }
+  function navigateToAbout() {
+      window.location.href = '/About';
+  }
+  </script>
+  </body>

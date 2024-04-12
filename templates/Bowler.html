@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="static/index2.css">
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form method="POST" action="{{url_for('prediction2')}}">
+                    <h2>BOWLER DATA</h2>
+                    <div class="inputbox">
+                        <input type="text" name="Overs" pattern="[0-9]*[.,]?[0-9]+" required>
+                        <label>Overs</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="Economy" pattern="[0-9]*[.,]?[0-9]+" required>
+                        <label>Economy</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="Runs" pattern="[0-9]*[.,]?[0-9]+" required>
+                        <label>Runs</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="Wickets" required>
+                        <label>Wickets</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="Average" pattern="[0-9]*[.,]?[0-9]+" required>
+                        <label>Average</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="Bowler_stat" pattern="[0-9]*[.,]?[0-9]+" required>
+                        <label>Bowler-statistics</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="4s" required>
+                        <label>4s</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="6s" required>
+                        <label>6s</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="Dots" required>
+                        <label>Dots</label>
+                    </div>
+                    <input type="submit" name="PREDICT" value="BOWLER TRAINING" style="width: 200px;height: 40px;margin-left: 50px;border-radius: 15px;background-color:blueviolet;">
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

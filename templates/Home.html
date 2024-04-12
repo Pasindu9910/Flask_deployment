@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="static/index2.css">
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form method="POST" action="{{url_for('prediction')}}">
+                    <h2>BATSMEN DATA</h2>
+                    <div class="inputbox">
+                        <input type="number" name="Runs" required>
+                        <label>Runs</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="Ball_Faced" required>
+                        <label>Ball Faced</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="Average" pattern="[0-9]*[.,]?[0-9]+" required>
+                        <label>Average</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="Strike-rate" pattern="[0-9]*[.,]?[0-9]+" required>
+                        <label>Strike-rate</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="Highest_Score" required>
+                        <label>Highest-Score</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="4s" required>
+                        <label>4s</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="6s" required>
+                        <label>6s</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="50s" required>
+                        <label>50's</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="number" name="100s" required>
+                        <label>100's</label>
+                    </div>
+                    <input type="submit" name="PREDICT" value="BATSMEN TRAINING" style="width: 200px;height: 40px;margin-left: 50px;border-radius: 15px;background-color:blueviolet">
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

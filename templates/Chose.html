@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('static/ckt.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        h1 {
+            position: absolute;
+            top: 20px; /* Adjust position to move h1 further down */
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            background-color: green;
+            border-radius: 15px;
+            width: 750px;
+            text-align: center; 
+            padding: 5px;
+            font-size: 30px;
+        }
+
+        .button {
+            border: 2px solid red;
+            cursor: pointer;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 357px;
+            height: 507px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 40px;
+            transition: border-color 0.3s;
+            position: relative; /* Add position relative to position absolute the h2 tags */
+        }
+
+        .tab {
+            position: absolute;
+            bottom: 0px; /* Adjust position as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            color: red; /* Add text color */
+        }
+
+        #button1 {
+            background-image: url('static/bowler.jpg');
+        }
+
+        #button2 {
+            background-image: url('static/batsman.jpg');
+        }
+    </style>
+</head>
+<body>
+    
+    <h1> SRI LANKA CRICKET TEAM TRAINING SYSTEM</h1>
+    <div class="button-container">
+        <div class="button" id="button1" onclick="redirectToBowler()">
+            <h2 class="tab" style="color: red;">BOWLER</h2>
+        </div>
+        <div class="button" id="button2" onclick="redirectToHome()">
+            <h2 class="tab">BATSMEN</h2>
+        </div>
+    </div>
+
+    <script>
+        function redirectToHome() {
+            // Redirect to Home.html
+            window.location.href = '/Home';
+        }
+
+        function redirectToBowler() {
+            // Redirect to Bowler.html
+            window.location.href = '/Bowler';
+        }
+        
+    </script>
+</body>
+</html>

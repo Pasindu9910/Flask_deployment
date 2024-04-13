@@ -24,6 +24,7 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 500px;
 
 }
 h2{
@@ -116,7 +117,7 @@ img{
     margin-bottom: 500px;
     margin-left: -470px;
     position: absolute;
-    margin-top: 400px;
+    margin-top: 500px;
 }
 .background-video {
     position: absolute;

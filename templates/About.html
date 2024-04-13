@@ -9,9 +9,7 @@
     <section id="navbar" style="font-size: 25px;">
       <ul>
         <a href="Index.html"><img class="logo" src="static/logo.png" width="5%" height="auto"></a>
-        <li><a href="Contactus.html">CONTACT</a></li>
-        <li><a class="active" href="About.html">ABOUT</a></li>
-        <li><a href="Index.html">HOME</a></li>
+        <li><a href="javascript:void(0);" onclick="navigateToHome()">HOME</a></li>
       </ul>
     </section>
     <section id="containers">
@@ -51,8 +49,8 @@
 
 <div class="row">
 <ul>
-<li><a href="Contactus.html">Contact us</a></li>
-<li><a href="About.html">About</a></li>
+<li><a href="javascript:void(0);" onclick="navigateToContactUs()">Contact us</a></li>
+<li><a href="javascript:void(0);" onclick="navigateToAbout()">About us</a></li>
 <li><a href="#">Terms & Conditions</a></li>
 </ul>
 </div>
@@ -62,4 +60,15 @@ Cricket Player Selection App Copyright © 2024 OUSL - All rights reserved || Des
 </div>
 </div>
 </footer>
+<script>
+  function navigateToContactUs() {
+      window.location.href = '/Contactus';
+  }
+  function navigateToAbout() {
+      window.location.href = '/About';
+  }
+  function navigateToHome() {
+      window.location.href = '/index';
+  }
+  </script>
     </body>

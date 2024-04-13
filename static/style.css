@@ -31,9 +31,6 @@ li a{
   border-radius: 15px;
   margin-top: 5px;
 }
-li a:hover:not(.active){
-  background-color: #111;
-}
 .active{
   background-color: green;
 }

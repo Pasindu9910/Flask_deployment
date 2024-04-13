@@ -110,5 +110,5 @@ def prediction():
        return render_template('batsmen/Module1,2and3.html')
     return render_template('batsmen/Module1,2and3.html', prediction=pred[0])
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -13,7 +13,7 @@
         <!-- Add alternative audio file formats if necessary -->
     </audio>
     <section>
-        <img src="static/logo.png" alt="">
+        <!-- <img src="static/logo.png" alt=""> -->
         <div class="form-box">
             <div class="form-value">
                 <form method="POST" action="{{url_for('Login')}}">
@@ -26,14 +26,22 @@
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
                         <input type="password" name="password" required>
-                        <label>PASWORD</label>
+                        <label>PASSWORD</label>
                     </div>
                     <input type="submit"name="LOG IN" value="LOG IN" style="width: 200px;height: 40px;margin-left: 50px;border-radius: 15px">
+                    
                 </form>
+                <button style="margin-top: 10px;width: 200px;margin-left: 50px;" onclick="redirectToRegister()">REGISTER</button>
             </div>
         </div>
     </section>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        function redirectToRegister() {
+
+            window.location.href = '/register';
+        }
+    </script>
 </body>
 </html>

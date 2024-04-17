@@ -1,11 +1,36 @@
-from flask import Flask, render_template, request,redirect, url_for
+from flask import Flask, render_template, request,redirect, url_for,session
+from flask_sqlalchemy import SQLAlchemy
+import bcrypt
 import pickle
 import numpy as np
+
 
 model = pickle.load(open('knn_model.pkl', 'rb'))
 model2 = pickle.load(open('knn_model2.pkl', 'rb'))
 
 app = Flask(__name__)
+
+#data base setup
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+db = SQLAlchemy(app)
+app.secret_key = 'secret_key'
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+
+    def __init__(self,email,password,name):
+        self.name = name
+        self.email = email
+        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    
+    def check_password(self,password):
+        return bcrypt.checkpw(password.encode('utf-8'),self.password.encode('utf-8'))
+
+with app.app_context():
+    db.create_all()
 
 
 @app.route('/')
@@ -28,6 +53,10 @@ def bowler():
 def index():
     return render_template('index.html')
 
+@app.route('/index2')
+def index2():
+    return render_template('Admin.html')
+
 @app.route('/Contactus')
 def contactus():
     return render_template('Contactus.html')
@@ -36,23 +65,38 @@ def contactus():
 def about():
     return render_template('About.html')
 
+@app.route('/register')
+def Register():
+    return render_template('Register.html')
+
 @app.route('/Login', methods=['POST','GET'])
 def Login():
-    email = request.form['email']
-    password = request.form['password']
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
 
-    # Example of validating the email and password 
-    if email == 'example@example.com' and password == 'password':
-        # If email and password are correct, redirect to the home page
-        return redirect(url_for('index'))
-    if email == 'example@example.com' and password == 'password':
-        # If email and password are correct, redirect to the home page
-        return redirect(url_for('index'))
-    if email == 'example@example.com' and password == 'password':
-        # If email and password are correct, redirect to the home page
-        return redirect(url_for('index'))
-    else:
-        # If email and password are incorrect, redirect back to the login page
+        user = User.query.filter_by(email=email).first()
+        
+        if user and user.check_password(password):
+            session['email'] = user.email
+            return redirect(url_for('index'))
+        else:
+            return redirect(url_for('man',error="Ivalid credentials"))
+
+    return redirect(url_for('man',error="Ivalid credentials"))
+
+
+@app.route('/register',methods=['GET','POST'])
+def register():
+    if request.method == 'POST':
+        # handle request
+        name = request.form['name']
+        email = request.form['email']
+        password = request.form['password']
+
+        new_user = User(name=name,email=email,password=password)
+        db.session.add(new_user)
+        db.session.commit()
         return redirect(url_for('man'))
     
 @app.route('/predict2', methods=['POST'])

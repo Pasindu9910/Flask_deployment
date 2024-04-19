@@ -67,7 +67,6 @@ def admin():
         feedback_list = Feedback.query.all()
         return render_template('Admin.html', all_users=all_users,feedback_list=feedback_list)
 
-
 @app.route('/Chose')
 def chose():
     return render_template('Chose.html')
@@ -108,15 +107,18 @@ def Login():
         password = request.form['password']
 
         user = User.query.filter_by(email=email).first()
-        
+
+        if user is None:
+            alert_script = '<script>alert("Your email is not registered."); window.history.back();</script>'
+            return alert_script
         if user and user.check_password(password):
             session['email'] = user.email
             return redirect(url_for('index'))
         else:
-            return redirect(url_for('man',error="Ivalid credentials"))
-    else:
-        return redirect(url_for('man',error="Ivalid credentials"))
-    
+            alert_script = f'<script>alert("Incorrect password. Please try again."); window.location.href = "{url_for("man")}";</script>'
+            return alert_script
+
+
 @app.route('/AdminLogin', methods=['POST','GET'])
 def AdminLogin():
     email = request.form['email']
@@ -126,7 +128,9 @@ def AdminLogin():
         # If email and password are correct, redirect to the home page
         return redirect(url_for('admin'))
     else:
-        return redirect(url_for('Adminlogin',error="Ivalid credentials"))
+        alert_script = f'<script>alert("Incorrect credentials try again!!"); window.location.href = "{url_for("Adminlogin")}";</script>'
+        return alert_script
+
 
 #New user registration function
 @app.route('/register',methods=['GET','POST'])

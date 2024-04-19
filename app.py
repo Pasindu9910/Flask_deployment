@@ -175,7 +175,8 @@ def feedback():
         db.session.commit()
         return redirect(url_for('contactus',message='Your data has been recorded successfully.'))
     else:
-        return "Unsupported request method."
+        alert_script = "<script>alert('Something went wrong'); window.history.back();</script>"
+        return alert_script
 
 @app.route('/delete_user/<int:user_id>', methods=['POST'])
 def delete_user(user_id):

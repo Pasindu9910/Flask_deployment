@@ -8,7 +8,7 @@
   <body>
     <section id="navbar" style="font-size: 25px;">
       <ul>
-        <a href="Index.html"><img class="logo" src="static/logo.png" width="5%" height="auto"></a>
+        <img class="logo" src="static/Cricknow.png" width="5%" height="auto">
         <li><a href="javascript:void(0);" onclick="navigateToHome()">HOME</a></li>
       </ul>
     </section>
@@ -18,8 +18,7 @@
     <div class="last_con">
         <h1>Contact Us</h1>
         <p>Have a question, suggestion, or just want to say hello? Fill out the form below to get in touch with us.</p>
-        
-        <form action="#" method="post">
+        <form action="{{url_for('feedback')}}" method="post">
           <label for="name">Name:</label>
           <input type="text" id="name" name="name" required>
           
@@ -29,7 +28,7 @@
           <label for="message">Message:</label>
           <textarea id="message" name="message" rows="5" required></textarea>
           
-          <input type="submit" onclick="alert('Under Constructions');">
+          <input type="submit" name="Feedback" value="Feedback">
         </form>
       </div>
           <!--FONT AWESOME-->
@@ -61,6 +60,16 @@ Cricket Player Selection App Copyright © 2024 OUSL - All rights reserved || Des
 </div>
 </div>
 </footer>
+<script>
+  // Check for the presence of a query parameter 'message'
+  const queryParams = new URLSearchParams(window.location.search);
+  const message = queryParams.get('message');
+
+  // If the 'message' query parameter exists, display an alert box
+  if (message) {
+    alert(message);
+  }
+</script>
 <script>
   function navigateToContactUs() {
       window.location.href = '/Contactus';

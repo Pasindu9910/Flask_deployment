@@ -54,7 +54,7 @@ with app.app_context():
 
 @app.route('/')
 def man():
-    return render_template('Login.html')
+    return render_template('Loogin.html')
 
 @app.route('/Home')
 def home():

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/index2.css">
+    <title>Baller Form</title>
+    <style>
+        /* Inline CSS for demo purposes, move this to your CSS file */
+        .scrollable-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .form-box {
+                position: relative;
+                width: 400px;
+                height: 1050px;
+                background: transparent;
+                border: 2px solid rgba(255,255,255,0.5);
+                border-radius: 20px;
+                backdrop-filter: blur(15px);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+
+        }
+        .form-value {
+            width: 370px;
+            margin-left: 40px;
+        }
+        .inputbox {
+            margin-bottom: 15px;
+            position: relative;
+        } 
+        .inputbox label {
+                position: absolute;
+                top: 50%;
+                left: 5px;
+                transform: translateY(-50%);
+                color: #f9fbff;
+                font-size: 1em;
+                pointer-events: none;
+                transition: .5s;
+        }
+        input[type="submit"] {
+            width: 200px;
+            height: 40px;
+            margin: 20px 0;
+            border-radius: 15px;
+            background-color: blueviolet;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <div class="form-box">
+        <div class="form-value">
+            <h2 style="margin-left: -30px;">Baller Information</h2>
+            <div class="scrollable-container">
+                <form action="{{ url_for('ballerT') }}" method="POST">
+
+                    <div class="inputbox">
+                        <input type="text" id="name" name="name" required>
+                        <label for="name">Name:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <select id="region" name="region" style="margin-left: 200px;" required>
+                            <option value="0">Asia</option>
+                            <option value="1">Outside Asia</option>
+                        </select>
+                        <label for="region">Region:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="matches" name="matches" required>
+                        <label for="matches">Number of Played Matches:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="innings" name="innings" required>
+                        <label for="innings">Innings:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="balls" name="balls" required>
+                        <label for="balls">Number of Balls Bowled:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="runs" name="runs" required>
+                        <label for="runs">Runs Given:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="wickets" name="wickets" required>
+                        <label for="wickets">Wickets Taken:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="econ" name="econ" required>
+                        <label for="econ">Economy of the Bowler:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="sr" name="sr" required>
+                        <label for="sr">Strike Rate:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="4s" name="4s" required>
+                        <label for="4s">Number of 4 wickets:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="5s" name="5s" required>
+                        <label for="5s">Number of 5 wickets:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="hw" name="hw" required>
+                        <label for="hw">Highest wickets for an inning:</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="number" id="rg" name="rg" required>
+                        <label for="rg">Given runs for that inning:</label>
+                    </div>
+
+                    <input type="submit" name="PREDICT" value="BOWLER SELECTION" style="margin-left: 50px;">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

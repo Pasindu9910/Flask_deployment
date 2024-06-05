@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<head>
+    <title>Chose player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('static/ckt.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn:hover{
+            background-color: green;
+            color: white;
+        }
+
+        h1 {
+            position: absolute;
+            top: 20px; 
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            background-color: green;
+            border-radius: 15px;
+            width: 750px;
+            text-align: center; 
+            padding: 5px;
+            font-size: 30px;
+            font-size: 40px;
+        }
+
+        .button {
+            border: 2px solid red;
+            cursor: pointer;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 357px;
+            height: 507px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 40px;
+            transition: border-color 0.3s;
+            position: relative; 
+        }
+
+        .tab {
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: red; 
+        }
+
+        #button1 {
+            background-image: url('static/bowler.jpg');
+        }
+
+        #button2 {
+            background-image: url('static/batsman.jpg');
+        }
+        #button3 {
+            background-image: url('static/fiel.png');
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <h1 style="font-family: 'poppins',sans-serif;"> SRI LANKA CRICKET TEAM PLAYER SELECTION SYSTEM</h1>
+        <div class="button-container">
+            <div class="button" id="button1" onclick="redirectToNewBowler()">
+                <h2 class="tab" style="color: red; margin-bottom: 460px;margin-left: 100px;">BOWLER</h2>
+             </div>
+            <div class="button" id="button2" onclick="redirectTonewBatsman()">
+                <h2 class="tab" style="color: red; margin-bottom: 460px;margin-left: 100px;">BATSMAN</h2>
+            </div>
+            <div class="button" id="button3" onclick="redirectTonewFielder()">
+                <h2 class="tab" style="color: red; margin-bottom: 460px;margin-left: 100px;">FIELDER</h2>
+            </div>
+        </div>
+    </section>
+    
+
+    <script>
+        function redirectTonewBatsman() {
+
+            window.location.href = '/NewBatsman';
+        }
+
+        function redirectTonewFielder() {
+
+            window.location.href = '/NewFielder';
+        }
+        function redirectToNewBowler() {
+
+            window.location.href = '/NewBowler';
+        }
+        
+    </script>
+</body>
+</html>

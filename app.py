@@ -7,6 +7,9 @@ import numpy as np
 
 model = pickle.load(open('knn_model.pkl', 'rb'))
 model2 = pickle.load(open('knn_model2.pkl', 'rb'))
+model3 = pickle.load(open('baller.pkl', 'rb'))
+model4 = pickle.load(open('batsman.pkl', 'rb'))
+model5 = pickle.load(open('fielder.pkl', 'rb'))
 
 app = Flask(__name__)
 
@@ -71,9 +74,25 @@ def admin():
 def chose():
     return render_template('Chose.html')
 
+@app.route('/Chose2')
+def chose2():
+    return render_template('Chose2.html')
+
 @app.route('/Bowler')
 def bowler():
     return render_template('Bowler.html')
+
+@app.route('/NewBowler')
+def newbowler():
+    return render_template('NewBowler/ballerT.html')
+
+@app.route('/NewBatsman')
+def newbatsman():
+    return render_template('NewBats/batsmanT.html')
+
+@app.route('/NewFielder')
+def newfielder():
+    return render_template('NewFielding/fielderT.html')
 
 @app.route('/index')
 def index():
@@ -259,6 +278,110 @@ def prediction():
     if prediction == 'module 1,2 and 3':
        return render_template('batsmen/Module1,2and3.html')
     return render_template('batsmen/Module1,2and3.html', prediction=pred[0])
+
+@app.route('/predict3', methods=['POST'])
+def ballerT():
+    data1 = float(request.form['region'])
+    data2 = float(request.form['matches'])
+    data3 = float(request.form['innings'])
+    data4 = float(request.form['balls'])
+    data5 = float(request.form['runs'])
+    data6 = float(request.form['wickets'])
+    data7 = float(request.form['econ'])
+    data8 = float(request.form['sr'])
+    data9 = float(request.form['4s'])
+    data10 = float(request.form['5s'])
+    data11 = float(request.form['hw'])
+    data12 = float(request.form['rg'])
+    name = request.form['name']
+    arr = np.array([[data1, data2, data3, data4,data5,data6,data7,data8,data9,data10,data11,data12]])
+    pred = model3.predict(arr)
+    formatted_pred = round(pred[0], 2)
+    if 'predictions' not in session:
+        session['predictions'] = []
+    
+    session['predictions'].append({'name': name, 'prediction': formatted_pred})
+    session.modified = True
+    
+    return redirect(url_for('show_predictions1'))
+
+@app.route('/clear_predictions1', methods=['POST'])
+def clear_predictions1():
+    session.pop('predictions', None)
+    return redirect(url_for('show_predictions1'))
+
+@app.route('/show_predictions1', methods=['GET'])
+def show_predictions1():
+    predictions = session.get('predictions', [])
+    return render_template('NewBowler/ballerData.html', predictions=predictions)
+
+@app.route('/predict4', methods=['POST'])
+def batsmanT():
+    data1 = float(request.form['region'])
+    data2 = float(request.form['matches'])
+    data3 = float(request.form['innings'])
+    data4 = float(request.form['no'])
+    data5 = float(request.form['bf'])
+    data6 = float(request.form['runs'])
+    data7 = float(request.form['hs'])
+    data8 = float(request.form['sr'])
+    data9 = float(request.form['cn'])
+    data10 = float(request.form['hcn'])
+    data11 = float(request.form['dk'])
+    name = request.form['name']
+    arr = np.array([[data1, data2, data3, data4,data5,data6,data7,data8,data9,data10,data11]])
+    pred = model4.predict(arr)
+    formatted_pred = round(pred[0], 2)
+    if 'predictions' not in session:
+        session['predictions'] = []
+    
+    session['predictions'].append({'name': name, 'prediction': formatted_pred})
+    session.modified = True
+    
+    return redirect(url_for('show_predictions'))
+
+@app.route('/clear_predictions', methods=['POST'])
+def clear_predictions():
+    session.pop('predictions', None)
+    return redirect(url_for('show_predictions'))
+
+@app.route('/show_predictions', methods=['GET'])
+def show_predictions():
+    predictions = session.get('predictions', [])
+    return render_template('NewBats/batsmanData.html', predictions=predictions)
+
+@app.route('/predict5', methods=['POST'])
+def fielderT():
+    data1 = float(request.form['region'])
+    data2 = float(request.form['matches'])
+    data3 = float(request.form['innings'])
+    data4 = float(request.form['totalcatches'])
+    data5 = float(request.form['totalstumps'])
+    data6 = float(request.form['catcheswk'])
+    data7 = float(request.form['catchesnf'])
+    name = request.form['name']
+    arr = np.array([[data1, data2, data3, data4,data5,data6,data7]])
+    pred = model5.predict(arr)
+    formatted_pred = round(pred[0], 2)
+    if 'predictions' not in session:
+        session['predictions'] = []
+    
+    session['predictions'].append({'name': name, 'prediction': formatted_pred})
+    session.modified = True
+    
+    return redirect(url_for('show_predictions2'))
+
+@app.route('/clear_predictions2', methods=['POST'])
+def clear_predictions2():
+    session.pop('predictions', None)
+    return redirect(url_for('show_predictions2'))
+
+@app.route('/show_predictions2', methods=['GET'])
+def show_predictions2():
+    predictions = session.get('predictions', [])
+    return render_template('NewFielding/fielderData.html', predictions=predictions)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -51,7 +51,7 @@ h2{
 }
 input:focus ~ label,
 input:valid ~ label{
-top: -5px;
+top: -4px;
 }
 .inputbox input {
     width: 100%;

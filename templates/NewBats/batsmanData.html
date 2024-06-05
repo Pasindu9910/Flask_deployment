@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/index3.css">
+    <title>Batsman Predictions</title>
+    <style>
+        /* Inline CSS for demo purposes, ideally move this to index3.css */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+        th, td {
+            border: 2px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            background-color: purple;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 20px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-direction: column;
+        }
+        .bottom-button {
+            margin-top: 600px;
+            position: absolute;
+        }
+        .but{
+            position: absolute;
+            margin-top: 700px;
+        }
+    </style>
+    <script>
+        function clearAndNavigate() {
+            // Submit the form to clear predictions
+            fetch("{{ url_for('clear_predictions') }}", {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    // Navigate to the chose2 page
+                    window.location.href = "{{ url_for('chose2') }}";
+                } else {
+                    alert('Failed to clear predictions.');
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="blur-bg">
+        <div class="container">
+            <h1>Batsman Predictions</h1>
+            <form action="{{ url_for('newbatsman') }}" method="GET">
+                <button type="submit">Go to Batsman Data Entry Page</button>
+            </form>
+            
+            {% if predictions %}
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Prediction</th>
+                    </tr>
+                    {% for prediction in predictions %}
+                        <tr>
+                            <td>{{ prediction.name }}</td>
+                            <td>{{ prediction.prediction }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <form action="{{ url_for('clear_predictions') }}" method="POST">
+                    <button type="submit">Clear All Predictions</button>
+                </form>
+            {% else %}
+                <p>No predictions available.</p>
+            {% endif %}
+          </div>
+          <button class="but" type="button" onclick="clearAndNavigate()"> PLAYER SELECTION</button>
+        </div>
+    </div>
+</body>
+</html>

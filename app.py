@@ -381,7 +381,5 @@ def show_predictions2():
     predictions = session.get('predictions', [])
     return render_template('NewFielding/fielderData.html', predictions=predictions)
 
-
-
 if __name__ == "__main__":
     app.run(debug=True)

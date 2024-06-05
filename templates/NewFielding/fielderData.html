@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/index3.css">
+    <link rel="icon" href="static/Cricknow.png" type="image/png">
     <title>Ballers Selection</title>
     <style>
         /* Inline CSS for demo purposes, ideally move this to index3.css */
@@ -87,7 +88,7 @@
         <div class="container">
             <h1>Fielder Predictions</h1>
             <form action="{{ url_for('newfielder') }}" method="GET">
-                <button type="submit">Go to Bowler Data Entry Page</button>
+                <button type="submit">Go to Fielder Data Entry Page</button>
             </form>
             
             {% if predictions %}

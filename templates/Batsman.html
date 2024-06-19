@@ -4,19 +4,98 @@
   <link rel="stylesheet" type="text/css" href="static/index2.css">
   <link rel="icon" href="static/Cricknow.png" type="image/png">
   <title>Batsman data input</title>
+  <script>
+    function validateForm() {
+        let runs = parseFloat(document.forms["batsmanForm"]["Runs"].value);
+        let ballsFaced = parseFloat(document.forms["batsmanForm"]["Ball_Faced"].value);
+        let highestScore = parseFloat(document.forms["batsmanForm"]["Highest_Score"].value);
+        let fours = parseFloat(document.forms["batsmanForm"]["4s"].value);
+        let sixes = parseFloat(document.forms["batsmanForm"]["6s"].value);
+        let fifties = parseFloat(document.forms["batsmanForm"]["50s"].value);
+        let hundreds = parseFloat(document.forms["batsmanForm"]["100s"].value);
+
+        if (runs === 0 && ballsFaced === 0 && highestScore === 0 &&
+        fours === 0 && sixes === 0 && fifties === 0 && hundreds === 0) {
+        alert("Please input valid data. All fields cannot be zero.");
+        return false;
+        }
+
+        if(ballsFaced === 0){
+            alert("balls Faced cannot be 0");
+            return false;
+        }
+
+        if (ballsFaced === 1 && runs !== highestScore) {
+            alert("High score must be the same value as runs when balls faced is 1");
+            return false;
+        }
+
+        if (runs > ballsFaced * 6) {
+            alert("Runs must be lower than "+(ballsFaced * 6) );
+            return false;
+        }
+
+        if(highestScore > runs){
+            alert("highestScore must be lower than runs");
+            return false;
+        }
+
+        if((fours*4 + sixes*6)>runs){
+            alert("Number of 4s and numebr of 6s must be lower than or equal to "+((fours*4 + sixes*6)));
+            return false;
+        }
+
+        if (fours > Math.round(runs / 4)) {
+            alert("Number of 4s must be lower than or equal to "+(Math.round(runs / 4)));
+            return false;
+        }
+
+        if (sixes > Math.round((runs - (fours * 4)) / 6)) {
+            alert("Number of 6s must be lower than or equal to "+( Math.round((runs - (fours * 4)) / 6)));
+            return false;
+        }
+
+        if (fifties > Math.round(runs / 50)) {
+            alert("Number of 50s must be lower than or equal to "+(Math.round(runs / 50)));
+            return false;
+        }
+
+        if (hundreds > Math.round((runs - (fifties * 50)) / 100)) {
+            alert("Number of 100s must be lower than or equal to "+(Math.round((runs - (fifties * 50)) / 100)));
+            return false;
+        }
+
+        if((fifties*50 + hundreds*100)>runs){
+            alert("The total of of 50s and 100s must be equal or less than "+((fifties*50 + hundreds*100)))
+            return false;
+        }
+
+        if((fifties * 50)>runs){
+            alert("The total of of 50s  must be equal or less than "+(fifties * 50))
+            return false;
+        }
+
+        if((hundreds * 100)>runs){
+            alert("The total of of 100s  must be equal or less than "+(hundreds * 50))
+            return false;
+        }
+
+        return true;
+    }
+  </script>
 </head>
 <body>
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form method="POST" action="{{url_for('prediction')}}">
+                <form name="batsmanForm" method="POST" action="{{url_for('prediction')}}" onsubmit="return validateForm()">
                     <h2>BATSMAN DATA</h2>
                     <div class="inputbox">
-                        <input type="number" name="Runs" required>
+                        <input type="number" name="Runs" min="0" required>
                         <label>Runs</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="Ball_Faced" required>
+                        <input type="number" name="Ball_Faced" min="0" required>
                         <label>Ball Faced</label>
                     </div>
                     <div class="inputbox">
@@ -24,27 +103,23 @@
                         <label>Average</label>
                     </div>
                     <div class="inputbox">
-                        <input type="text" name="Strike-rate" pattern="[0-9]*[.,]?[0-9]+" required>
-                        <label>Strike-rate</label>
-                    </div>
-                    <div class="inputbox">
-                        <input type="number" name="Highest_Score" required>
+                        <input type="number" name="Highest_Score" min="0" required>
                         <label>Highest-Score</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="4s" required>
+                        <input type="number" name="4s" min="0" required>
                         <label>4s</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="6s" required>
+                        <input type="number" name="6s" min="0" required>
                         <label>6s</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="50s" required>
+                        <input type="number" name="50s" min="0" required>
                         <label>50's</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="100s" required>
+                        <input type="number" name="100s" min="0" required>
                         <label>100's</label>
                     </div>
                     <input type="submit" name="PREDICT" value="BATSMEN TRAINING" style="width: 200px;height: 40px;margin-left: 50px;border-radius: 15px;background-color:blueviolet">

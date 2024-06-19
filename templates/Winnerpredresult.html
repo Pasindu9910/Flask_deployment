@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="static/index3.css">
+  <link rel="icon" href="static/Cricknow.png" type="image/png">
+  <script>
+    // JavaScript function to get country name based on number
+    function getCountryName(number) {
+      switch (number) {
+        case 1: return "SRI LANKA";
+        case 2: return "NETHERLANDS";
+        case 3: return "ZIMBABWE";
+        case 4: return "INDIA";
+        case 5: return "AUSTRALIA";
+        case 6: return "SOUTH AFRICA";
+        case 7: return "PAKISTAN";
+        case 8: return "IRELAND";
+        case 9: return "ENGLAND";
+        case 10: return "NEW ZEALAND";
+        case 11: return "WEST INDIES";
+        case 12: return "KENYA";
+        case 13: return "CANADA";
+        case 14: return "SCOTLAND";
+        case 15: return "AFGHANISTAN";
+        case 16: return "HONG KONG";
+        case 17: return "NEPAL";
+        case 18: return "UNITED ARAB EMIRATES";
+        case 19: return "UNITED STATES OF AMERICA";
+        case 20: return "ICC WORLD XI";
+        case 21: return "BANGLADESH";
+        case 22: return "PAPUA NEW GUINEA";
+        case 23: return "BERMUDA";
+        case 24: return "ASIA XI";
+        case 25: return "NAMIBIA";
+        case 26: return "EAST (AND CENTRAL) AFRICA";
+        case 27: return "AFRICA XI";
+        default: return "Unknown";
+      }
+    }
+ // Function to display selected teams and predicted winner
+ function showTeamNames() {
+            var team1Id = parseInt("{{ data0 }}");  // Replace with Flask variable for team1 ID
+            var team2Id = parseInt("{{ data1 }}");  // Replace with Flask variable for team2 ID
+            var predictedWinnerId = parseInt("{{ prediction }}");  // Replace with Flask variable for predicted winner ID
+
+            var team1Name = getCountryName(team1Id);
+            var team2Name = getCountryName(team2Id);
+            var predictedWinnerName = getCountryName(predictedWinnerId);
+
+            document.getElementById("team1Name").innerText = team1Name;
+            document.getElementById("team2Name").innerText = team2Name;
+            document.getElementById("predictedWinnerName").innerText = predictedWinnerName;
+        }
+
+        // Call the function when the page loads or as needed
+        window.onload = function() {
+            showTeamNames();
+        };
+  </script>
+</head>
+<body>
+    <div class="blur-bg">
+        <div class="container">
+            <div class="content">
+                <h1>Match Winning Result</h1>
+                <p>For the match Between <span id="team1Name"></span> and <span id="team2Name"></span>, the probability for winning the match is <span id="predictedWinnerName"></span>.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

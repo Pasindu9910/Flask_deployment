@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/index2.css">
+    <link rel="icon" href="static/Cricknow.png" type="image/png">
+    <title>Select Batsmen or Bowler</title>
+    <style>
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+}
+
+.button-container {
+    display: flex;
+    gap: 70px;
+}
+
+.sport-button {
+    padding: 20px 40px;
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 400px;
+    height:200px ;
+}
+
+.sport-button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <section class="button-container">
+        <button class="sport-button" onclick="redirecttobatsmen()">Batsmen</button>
+        <button class="sport-button" onclick="redirecttobowler()">Bowler</button>
+    </section>
+    <script>
+        function redirecttobatsmen(){
+            window.location.href = '/combinebatsmen';
+        }
+        function redirecttobowler(){
+            window.location.href = '/combinebowler';
+        }
+    </script>
+</body>
+</html>

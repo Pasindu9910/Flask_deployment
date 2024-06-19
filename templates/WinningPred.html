@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="static/index2.css">
+  <link rel="icon" href="static/Cricknow.png" type="image/png">
+  <title>Bowler data input</title>
+  <style>
+    .form-box{
+      height: 500px;
+    }
+  </style>
+  <script>
+function updateSecondDropdown() {
+  const team1 = document.getElementById('team1').value;
+  const team2 = document.getElementById('team2');
+
+  // Enable all options in team2 first
+  for (let i = 0; i < team2.options.length; i++) {
+    team2.options[i].disabled = false;
+  }
+
+  // Disable the option in team2 that matches team1
+  for (let i = 0; i < team2.options.length; i++) {
+    if (team2.options[i].value === team1) {
+      team2.options[i].disabled = true;
+    }
+  }
+}
+
+function validateForm() {
+      const team1 = document.getElementById('team1').value;
+      const team2 = document.getElementById('team2').value;
+
+      if (team1 === team2) {
+        alert('Please select different teams for Team 1 and Team 2.');
+        return false; // Prevent form submission
+      }
+
+      return true; // Allow form submission
+    }
+  </script>
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form method="POST" action="{{url_for('prediction3')}}" onsubmit="return validateForm()">
+                    <h2>Winning Prediction</h2>
+                    <div class="inputbox">
+                        <select id="team1" name="team1" onchange="updateSecondDropdown()">
+                            <option value="1">SRI LANKA </option>
+                            <option value="2">NETHERLANDS </option>
+                            <option value="3">ZIMBABWE </option>
+                            <option value="4">INDIA </option>
+                            <option value="5">AUSTRALIA </option>
+                            <option value="6">SOUTH AFRICA </option>
+                            <option value="7">PAKISTAN </option>
+                            <option value="8">IRELAND </option>
+                            <option value="9">ENGLAND </option>
+                            <option value="10">NEW ZEALAND </option>
+                            <option value="11">WEST INDIES </option>
+                            <option value="12">KENYA </option>
+                            <option value="13">CANADA </option>
+                            <option value="14">SCOTLAND </option>
+                            <option value="15">AFGHANISTAN </option>
+                            <option value="16">HONG KONG </option>
+                            <option value="17">NEPAL </option>
+                            <option value="18">UNITED ARAB EMIRATES </option>
+                            <option value="19">UNITED STATES OF AMERICA </option>
+                            <option value="20">ICC WORLD XI </option>
+                            <option value="21">BANGLADESH </option>
+                            <option value="22">PAPUA NEW GUINEA </option>
+                            <option value="23">BERMUDA</option>
+                            <option value="24">ASIA XI </option>
+                            <option value="25">NAMIBIA </option>
+                            <option value="26">EAST (AND CENTRAL) AFRICA </option>
+                            <option value="27">AFRICA XI </option>
+                            
+                            
+                        </select>
+                    </div>
+                    <div class="inputbox">
+                        <select id="team2" name="team2" onchange="updateSecondDropdown()">
+                            <option value="1">SRI LANKA </option>
+                            <option value="2">NETHERLANDS </option>
+                            <option value="3">ZIMBABWE </option>
+                            <option value="4">INDIA </option>
+                            <option value="5">AUSTRALIA </option>
+                            <option value="6">SOUTH AFRICA </option>
+                            <option value="7">PAKISTAN </option>
+                            <option value="8">IRELAND </option>
+                            <option value="9">ENGLAND </option>
+                            <option value="10">NEW ZEALAND </option>
+                            <option value="11">WEST INDIES </option>
+                            <option value="12">KENYA </option>
+                            <option value="13">CANADA </option>
+                            <option value="14">SCOTLAND </option>
+                            <option value="15">AFGHANISTAN </option>
+                            <option value="16">HONG KONG </option>
+                            <option value="17">NEPAL </option>
+                            <option value="18">UNITED ARAB EMIRATES </option>
+                            <option value="19">UNITED STATES OF AMERICA </option>
+                            <option value="20">ICC WORLD XI </option>
+                            <option value="21">BANGLADESH </option>
+                            <option value="22">PAPUA NEW GUINEA </option>
+                            <option value="23">BERMUDA</option>
+                            <option value="24">ASIA XI </option>
+                            <option value="25">NAMIBIA </option>
+                            <option value="26">EAST (AND CENTRAL) AFRICA </option>
+                            <option value="27">AFRICA XI </option>
+                        </select>
+                    </div>
+                  
+                    <div class="inputbox">
+                        <input type="text" name="team1overs" required>
+                        <label>First Inning Overs: </label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="team1wickets"  required>
+                        <label>First Inning Wickets:</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="text" name="team1runs"  required>
+                        <label>First Inning Runs:</label>
+                    </div>
+                    
+                    <input type="submit" name="PREDICT" value="Winning Team" style="width: 200px;height: 40px;margin-left: 50px;border-radius: 15px;background-color:blueviolet;">
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

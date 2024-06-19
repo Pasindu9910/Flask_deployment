@@ -4,47 +4,163 @@
   <link rel="stylesheet" type="text/css" href="static/index2.css">
   <link rel="icon" href="static/Cricknow.png" type="image/png">
   <title>Bowler data input</title>
+  <script>
+    function validateForm() {
+        let innings = parseFloat(document.forms["bowlersForm"]["Innings"].value);
+        let Overs = parseFloat(document.forms["bowlersForm"]["Overs"].value);
+        let Runs = parseFloat(document.forms["bowlersForm"]["Runs"].value);
+        let Wickets = parseFloat(document.forms["bowlersForm"]["Wickets"].value);
+        let wickets4 = parseFloat(document.forms["bowlersForm"]["4wickets"].value);
+        let wickets5 = parseFloat(document.forms["bowlersForm"]["5wickets"].value);
+        let s4 = parseFloat(document.forms["bowlersForm"]["4s"].value);
+        let s6 = parseFloat(document.forms["bowlersForm"]["6s"].value);
+        let Dots = parseFloat(document.forms["bowlersForm"]["Dots"].value);
+
+        if (innings === 0 && Overs === 0 && Runs === 0 &&
+        Wickets === 0 && wickets4 === 0 && wickets5 === 0 && s4 === 0 && s6 === 0 && Dots === 0) {
+            alert("Please input valid data. All fields cannot be zero.");
+            return false;
+        }
+
+        if(innings === 0){
+            alert("Please input valid data. Innings cannot be 0");
+            return false;
+        }
+
+        if(Overs*6 < ((s4 + s6 + Dots))){
+            alert("Number of Overs must be lower than or equal to "+ (((s4 + s6 + Dots))));
+            return false;
+        }
+
+        if(Overs === 0){
+            alert("Please input valid data. overs cannot be 0");
+            return false;
+        }
+
+        if (s4  === Runs) {
+            alert("Total runs from 4s must be lower than or equal to " + Runs);
+            return false;
+        }
+
+        if (s6 === Runs) {
+            alert("Total runs from 6s must be lower than or equal to " + Runs);
+            return false;
+        }
+
+        if ((s4 * 4 + s6 * 6) > Runs ) {
+            alert("Number of Total 4 s and 6s must be lower than or equal to "+(Runs));
+            return false;
+        }
+
+        if (Dots > Overs*6) {
+            alert("Number of Dots must be lower than or equal to "+ (Overs*6));
+            return false;
+        }
+
+        if (Runs > Math.round(Math.round(Overs)*36) + 10) {
+            alert("Number of runs must be lower than or equal to "+(Math.round(Math.round(Overs)*36) + 10));
+            return false;
+        }
+
+        if (Wickets > innings * 10) {
+            alert("Number of wickets must be lower than or equal to "+(innings * 10));
+            return false;
+        }
+
+        if(wickets4 * 4 > Wickets){
+            alert("Number of 4 wickets  must be lower than or equal to total wickets");
+            return false;
+        }
+
+        if(wickets5 * 5 > Wickets){
+            alert("Number of 5 wickets  must be lower than or equal to total wickets");
+            return false;
+        }
+
+        if((wickets4 * 4 + wickets5 * 5)>Wickets){
+            alert("Number of sum of 4 wickets and 5 wickets  must be lower than or equal to total wickets");
+            return false;
+        }
+
+        if (wickets4 > math.round(Wickets/4)) {
+            alert("Number of 4 wickets  must be lower than or equal to "+(math.round(Wickets/4)));
+            return false;
+        }
+
+        if (wickets5 > Math.round((Wickets-(wickets4*4)) / 5)) {
+            alert("Number of 5 wickets must be lower than or equal to "+(Math.round((Wickets-(wickets4*4)) / 5)));
+            return false;
+        }
+
+        if (s4  > Math.round(Runs/4)) {
+            alert("Number of 4s must be lower than or equal to "+(Math.round(Runs/4)));
+            return false;
+        }
+
+        if (s6 > Math.round(Math.round(Runs-(s4*4)/6))) {
+            alert("Number of 6s must be lower than or equal to "+(Math.round(Math.round(Runs-(s4*4)/6))));
+            return false;
+        }
+
+        if ((s4 * 4) > Runs ) {
+            alert("Number of Total 4s must be lower than or equal to "+(Runs));
+            return false;
+        }
+
+        if ((s6 * 6) > Runs ) {
+            alert("Number of 6s wickets must be lower than or equal to "+(Runs));
+            return false;
+        }
+
+        if (Dots > innings*60) {
+            alert("Number of Dots must be lower than or equal to "+(innings*60));
+            return false;
+        }
+
+        return true;
+    }
+  </script>
 </head>
 <body>
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form method="POST" action="{{url_for('prediction2')}}">
+                <form name="bowlersForm" method="POST" action="{{url_for('prediction2')}}" onsubmit="return validateForm()">
                     <h2>BOWLER DATA</h2>
+                    <div class="inputbox">
+                        <input type="number" name="Innings" min="0" required>
+                        <label>Innings:</label>
+                    </div>
                     <div class="inputbox">
                         <input type="text" name="Overs" pattern="[0-9]*[.,]?[0-9]+" required>
                         <label>Overs</label>
-                    </div>
-                    <div class="inputbox">
-                        <input type="text" name="Economy" pattern="[0-9]*[.,]?[0-9]+" required>
-                        <label>Economy</label>
                     </div>
                     <div class="inputbox">
                         <input type="text" name="Runs" pattern="[0-9]*[.,]?[0-9]+" required>
                         <label>Runs</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="Wickets" required>
+                        <input type="number" name="Wickets" min="0" required>
                         <label>Wickets</label>
                     </div>
                     <div class="inputbox">
-                        <input type="text" name="Average" pattern="[0-9]*[.,]?[0-9]+" required>
-                        <label>Average</label>
+                        <input type="number" name="4wickets" min="0" required>
+                        <label>4 wickets</label>
                     </div>
                     <div class="inputbox">
-                        <input type="text" name="Bowler_stat" pattern="[0-9]*[.,]?[0-9]+" required>
-                        <label>Bowler-statistics</label>
+                        <input type="number" name="5wickets" min="0" required>
+                        <label>5 wickets</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="4s" required>
+                        <input type="number" name="4s" min="0" required>
                         <label>4s</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="6s" required>
+                        <input type="number" name="6s" min="0" required>
                         <label>6s</label>
                     </div>
                     <div class="inputbox">
-                        <input type="number" name="Dots" required>
+                        <input type="number" name="Dots" min="0" required>
                         <label>Dots</label>
                     </div>
                     <input type="submit" name="PREDICT" value="BOWLER TRAINING" style="width: 200px;height: 40px;margin-left: 50px;border-radius: 15px;background-color:blueviolet;">

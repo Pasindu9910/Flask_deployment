@@ -1,0 +1,62 @@
+[
+    {
+        "name": "kasun",
+        "innings": 50.0,
+        "not_outs": 27.0,
+        "runs": 53.0,
+        "strike_rate": 23.0,
+        "HighestScore": 80.0,
+        "hundreds": 8.0,
+        "fifties": 38.0,
+        "zeros": 28.0,
+        "average": 47.0
+    },
+    {
+        "name": "Ajith",
+        "innings": 48.0,
+        "not_outs": 19.0,
+        "runs": 37.0,
+        "strike_rate": 40.0,
+        "HighestScore": 84.0,
+        "hundreds": 38.0,
+        "fifties": 72.0,
+        "zeros": 45.0,
+        "average": 8.0
+    },
+    {
+        "name": "Nimal",
+        "innings": 74.0,
+        "not_outs": 39.0,
+        "runs": 16.0,
+        "strike_rate": 94.0,
+        "HighestScore": 38.0,
+        "hundreds": 45.0,
+        "fifties": 33.0,
+        "zeros": 4.0,
+        "average": 36.0
+    },
+    {
+        "name": "sujith",
+        "innings": 5.0,
+        "not_outs": 2.0,
+        "runs": 68.0,
+        "strike_rate": 46.0,
+        "HighestScore": 87.0,
+        "hundreds": 8.0,
+        "fifties": 3.0,
+        "zeros": 0.0,
+        "average": 38.0
+    },
+    {
+        "name": "kumara",
+        "innings": 48.0,
+        "not_outs": 32.0,
+        "runs": 97.0,
+        "strike_rate": 38.0,
+        "HighestScore": 47.0,
+        "hundreds": 48.0,
+        "fifties": 73.0,
+        "zeros": 9.0,
+        "average": 45.0
+    }
+]

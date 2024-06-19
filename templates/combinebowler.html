@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/index2.css">
+    <title>Cricket Player Stats Form</title>
+    <style>
+        /* Inline CSS for demo purposes, move this to your CSS file */
+        .form-box {
+            width: 400px;
+            height: auto;
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(15px); /* Background blur for aesthetics */
+            margin: 20px auto; /* Center the form box */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add shadow for depth */
+        }
+
+
+        .inputbox {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .inputbox label {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            color: #ffffff; /* Darker label text color */
+            font-size: 0.9em; /* Adjust label font size */
+            pointer-events: none;
+            transition: .5s;
+        }
+
+
+        .form-box button[type="submit"]:hover {
+            background-color: darkviolet; /* Hover color */
+        }
+        
+    </style>
+    <script>
+        function validateForm() {
+            var name = document.getElementById('name').value;
+            var regex = /\d/;
+            if (regex.test(name)) {
+                alert("Name cannot contain numbers.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    
+    <form action="{{ url_for('bowlerss') }}" method="POST" class="form-grid">
+       
+        {% for i in range(1, 6) %}
+        <section>
+            <div class="form-box">
+                <div class="form-value">
+                    <h2 style="margin-left: -30px;">Baller Information {{i}}</h2>
+                    <div class="scrollable-container">
+        <div class="inputbox">
+            <input type="text" name="name{{ i }}" required>
+            <label>Name:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="text" name="innings{{ i }}"  required>
+            <label>Innings:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="text" name="wickets{{ i }}"  required>
+            <label>Wickets:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="text" name="economy{{ i }}"  required>
+            <label>Economy:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="text" name="sr{{ i }}"  step="0.01" required>
+            <label>Strike Rate:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="text" name="4s{{ i }}"  required>
+            <label>Four Wickets:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="text" name="5s{{ i }}"  required>
+            <label>Five Wickets:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="text" name="hw{{ i }}"  required>
+            <label>Hat-Trick Wickets:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="text" name="average{{ i }}" step="0.01" required>
+            <label>Average:</label>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+
+        {% endfor %}
+        <button type="submit" style="color: blueviolet;">Submit</button>
+    </form>
+
+</body>
+</html>

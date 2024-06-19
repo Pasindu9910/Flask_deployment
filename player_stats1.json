@@ -1,0 +1,57 @@
+[
+    {
+        "name": "pasindu",
+        "innings": 23.5,
+        "wickets": 12.7,
+        "economy": 32.9,
+        "strike_rate": 23.0,
+        "4s": 23.0,
+        "5s": 23.0,
+        "hw": 23.0,
+        "average": 23.0
+    },
+    {
+        "name": "Ajith",
+        "innings": 23.0,
+        "wickets": 23.0,
+        "economy": 23.0,
+        "strike_rate": 23.0,
+        "4s": 23.0,
+        "5s": 23.0,
+        "hw": 2.0,
+        "average": 23.0
+    },
+    {
+        "name": "Nimal",
+        "innings": 23.0,
+        "wickets": 23.0,
+        "economy": 232.0,
+        "strike_rate": 32.0,
+        "4s": 32.0,
+        "5s": 32.0,
+        "hw": 23.0,
+        "average": 23.0
+    },
+    {
+        "name": "KP",
+        "innings": 23.0,
+        "wickets": 45.0,
+        "economy": 454.0,
+        "strike_rate": 544.0,
+        "4s": 54.0,
+        "5s": 45.0,
+        "hw": 45.0,
+        "average": 45.0
+    },
+    {
+        "name": "FY",
+        "innings": 78.0,
+        "wickets": 878.0,
+        "economy": 78.0,
+        "strike_rate": 7878.0,
+        "4s": 78.0,
+        "5s": 78.0,
+        "hw": 78.0,
+        "average": 78.0
+    }
+]

@@ -71,11 +71,45 @@
         #button3 {
             background-image: url('static/fiel.png');
         }
+        section{
+            margin-top: -300px;
+        }
+        .winning-prediction-btn {
+            margin-top: 700px;
+            position:absolute;
+            width: 1000px;
+            height: 100px;
+            background-color: blueviolet;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 60px;
+            text-align: center;
+            line-height: 100px; /* Align text vertically */
+        }
+        .PlayerCombination{
+            margin-top: 400px;
+            position:absolute;
+            width: 1000px;
+            height: 100px;
+            background-color: blueviolet;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 60px;
+            text-align: center;
+            line-height: 100px; /* Align text vertically */
+        }
+
+        .winning-prediction-btn:hover {
+            background-color: darkviolet;
+        }
     </style>
 </head>
 <body>
     <section>
-        <h1 style="font-family: 'poppins',sans-serif;"> SRI LANKA CRICKET TEAM PLAYER SELECTION SYSTEM</h1>
         <div class="button-container">
             <div class="button" id="button1" onclick="redirectToNewBowler()">
                 <h2 class="tab" style="color: red; margin-bottom: 460px;margin-left: 100px;">BOWLER</h2>
@@ -83,26 +117,27 @@
             <div class="button" id="button2" onclick="redirectTonewBatsman()">
                 <h2 class="tab" style="color: red; margin-bottom: 460px;margin-left: 100px;">BATSMAN</h2>
             </div>
-            <div class="button" id="button3" onclick="redirectTonewFielder()">
-                <h2 class="tab" style="color: red; margin-bottom: 460px;margin-left: 100px;">FIELDER</h2>
-            </div>
         </div>
     </section>
-    
+    <button class="PlayerCombination" onclick="redirectToPlayerCombination()">Select Player Combination</button>
+    <button class="winning-prediction-btn" onclick="redirectToWinningPrediction()">Winning Prediction</button>
 
     <script>
         function redirectTonewBatsman() {
 
             window.location.href = '/NewBatsman';
         }
-
-        function redirectTonewFielder() {
-
-            window.location.href = '/NewFielder';
-        }
         function redirectToNewBowler() {
 
             window.location.href = '/NewBowler';
+        }
+        function redirectToWinningPrediction() {
+
+            window.location.href = '/NewWinningPrediction';
+        }
+        function redirectToPlayerCombination() {
+
+        window.location.href = '/PlayerCombination';
         }
         
     </script>

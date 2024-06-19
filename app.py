@@ -1,15 +1,21 @@
-from flask import Flask, render_template, request,redirect, url_for,session
+from flask import Flask, render_template, request,redirect, url_for,session,jsonify 
 from flask_sqlalchemy import SQLAlchemy
+import json
+import random
 import bcrypt
 import pickle
 import numpy as np
 
+import sklearn
+print("scikit-learn version:", sklearn.__version__)
 
-model = pickle.load(open('knn_model.pkl', 'rb'))
-model2 = pickle.load(open('knn_model2.pkl', 'rb'))
+with open('training_model.pkl', 'rb') as file:
+    loaded_model, loaded_le = pickle.load(file)
+with open('training_model1.pkl', 'rb') as file:
+    loaded_model1, loaded_le1 = pickle.load(file)
 model3 = pickle.load(open('baller.pkl', 'rb'))
 model4 = pickle.load(open('batsman.pkl', 'rb'))
-model5 = pickle.load(open('fielder.pkl', 'rb'))
+model6 = pickle.load(open('winning.pkl', 'rb'))
 
 app = Flask(__name__)
 
@@ -90,13 +96,26 @@ def newbowler():
 def newbatsman():
     return render_template('NewBats/batsmanT.html')
 
-@app.route('/NewFielder')
-def newfielder():
-    return render_template('NewFielding/fielderT.html')
+
+@app.route('/PlayerCombination')
+def Playercombination():
+    return render_template('PlayerCombination.html')
+
+@app.route('/combinebatsmen')
+def combinebatsmen():
+    return render_template('batsmencombine.html')
+
+@app.route('/combinebowler')
+def combinebowler():
+    return render_template('combinebowler.html')
+
+@app.route('/NewWinningPrediction')
+def winner():
+    return render_template('WinningPred.html')
 
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('Index.html')
 
 @app.route('/index2')
 def index2():
@@ -226,27 +245,31 @@ def delete_feedback(feedback_id):
 #predicting bowler training   
 @app.route('/predict2', methods=['POST'])
 def prediction2():
-    data0 = float(request.form['Overs'])
-    data1 = float(request.form['Runs'])
-    data2 = float(request.form['Wickets'])
-    data3 = float(request.form['Economy'])
-    data4 = float(request.form['Average'])
-    data5 = float(request.form['Bowler_stat'])
-    data6 = float(request.form['4s'])
-    data7 = float(request.form['6s'])
-    data8 = float(request.form['Dots'])
-    arr = np.array([[data0,data1, data2, data3, data4,data5,data6,data7,data8]])
-    pred = model2.predict(arr)
-    prediction = pred[0]
+    data0 = float(request.form['Innings'])
+    data1 = float(request.form['Overs'])
+    data2 = float(request.form['Runs'])
+    data3 = float(request.form['Wickets'])
+    data4 = float(data2/data1) if data1 != 0 else 0
+    data5 = float(data2/data3) if data1 != 0 else 0
+    data6 = float(data1*6/data3) if data1 != 0 else 0
+    data7 = float(request.form['4wickets'])
+    data8 = float(request.form['5wickets'])
+    data9 = float(request.form['4s'])
+    data10 = float(request.form['6s'])
+    data11 = float(request.form['Dots'])
+    arr = np.array([[data0,data1, data2, data3, data4,data5,data6,data7,data8,data9,data10,data11]])
+    new_predictions = loaded_model1.predict(arr)
+    new_predictions_decoded = loaded_le1.inverse_transform(new_predictions)
+    prediction = new_predictions_decoded[0]
     if prediction == "Technical Skills":
-      return render_template('bowlers/Module1.html') 
+      return render_template('bowlers/module1.html') 
     if prediction == "Tactics and Strategy":
-       return render_template('bowlers/Module2.html')
+       return render_template('bowlers/module2.html')
     if prediction == "Precision and Consistency":
-       return render_template('bowlers/Module3.html')
+       return render_template('bowlers/module3.html')
     if prediction == "Wicket-taking and Attack":
-        return render_template('bowlers/Module4.html')
-    return render_template('Test.html', prediction=pred[0])
+       return render_template('bowlers/module4.html')
+    
 
 #predicting batsman training 
 @app.route('/predict', methods=['POST'])
@@ -254,30 +277,29 @@ def prediction():
     data0 = float(request.form['Runs'])
     data1 = float(request.form['Ball_Faced'])
     data2 = float(request.form['Average'])
-    data3 = float(request.form['Strike-rate'])
+    data3 = float(data0/data1*100) if data1 != 0 else 0
     data4 = float(request.form['Highest_Score'])
     data5 = float(request.form['4s'])
     data6 = float(request.form['6s'])
     data7 = float(request.form['50s'])
     data8 = float(request.form['100s'])
     arr = np.array([[data0,data1, data2, data3, data4,data5,data6,data7,data8]])
-    pred = model.predict(arr)
-    prediction = pred[0]
-    if prediction == "module 6":
-      return render_template('batsmen/Module6.html') 
-    if prediction == "module 4":
-       return render_template('batsmen/Module4.html')
-    if prediction == "module 1,3 and 4":
-       return render_template('batsmen/Module1,3and4.html')
-    if prediction == "module 1 and 2":
-        return render_template('batsmen/Module1and2.html')
-    if prediction == "module 3 and 4":
-       return render_template('batsmen/Module3and4.html')
-    if prediction == "module 1,2 and 4":
-        return render_template('batsmen/Module1,2and4.html')
-    if prediction == 'module 1,2 and 3':
-       return render_template('batsmen/Module1,2and3.html')
-    return render_template('batsmen/Module1,2and3.html', prediction=pred[0])
+    new_predictions = loaded_model.predict(arr)
+    new_predictions_decoded = loaded_le.inverse_transform(new_predictions)
+    prediction = new_predictions_decoded[0]
+    if prediction == "Advanced Scoring Strategies":
+      return render_template('batsmen/Advanced Scoring Strategies.html') 
+    if prediction == "Power Hitting Skills":
+       return render_template('batsmen/Power Hitting Skills.html')
+    if prediction == "Consistent Batting Techniques":
+       return render_template('batsmen/Consistent Batting Techniques.html')
+    if prediction == "Experience and Control":
+        return render_template('batsmen/Experience and Control.html')
+    if prediction == "Fundamentals and Basics":
+       return render_template('batsmen/Fundamentals and Basics.html')
+    if prediction == "General Training":
+       return render_template('batsmen/General Training.html')
+
 
 @app.route('/predict3', methods=['POST'])
 def ballerT():
@@ -350,36 +372,234 @@ def show_predictions():
     predictions = session.get('predictions', [])
     return render_template('NewBats/batsmanData.html', predictions=predictions)
 
-@app.route('/predict5', methods=['POST'])
-def fielderT():
-    data1 = float(request.form['region'])
-    data2 = float(request.form['matches'])
-    data3 = float(request.form['innings'])
-    data4 = float(request.form['totalcatches'])
-    data5 = float(request.form['totalstumps'])
-    data6 = float(request.form['catcheswk'])
-    data7 = float(request.form['catchesnf'])
-    name = request.form['name']
-    arr = np.array([[data1, data2, data3, data4,data5,data6,data7]])
-    pred = model5.predict(arr)
-    formatted_pred = round(pred[0], 2)
-    if 'predictions' not in session:
-        session['predictions'] = []
-    
-    session['predictions'].append({'name': name, 'prediction': formatted_pred})
-    session.modified = True
-    
-    return redirect(url_for('show_predictions2'))
 
-@app.route('/clear_predictions2', methods=['POST'])
-def clear_predictions2():
-    session.pop('predictions', None)
-    return redirect(url_for('show_predictions2'))
+########################################################################################
 
-@app.route('/show_predictions2', methods=['GET'])
-def show_predictions2():
-    predictions = session.get('predictions', [])
-    return render_template('NewFielding/fielderData.html', predictions=predictions)
+
+@app.route('/predict6', methods=['POST'])
+def prediction3():
+    data0 = float(request.form['team1'])
+    data1 = float(request.form['team2'])
+    data2 = float(request.form['team1overs'])
+    data3 = float(request.form['team1wickets'])
+    data4 = float(request.form['team1runs'])
+
+    arr = np.array([[data0, data1, data2, data3, data4]])
+
+    pred = model6.predict(arr)
+
+    return render_template('Winnerpredresult.html', data0=data0, data1=data1, prediction=pred[0])
+
+
+
+@app.route('/batsmanss', methods=['POST'])
+def batsmanss():
+    data = []
+    for i in range(1, 6):
+        player = {
+            'name': request.form.get(f'name{i}'),
+            'innings': float(request.form.get(f'innings{i}')),
+            'not_outs': float(request.form.get(f'not_outs{i}')),
+            'runs': float(request.form.get(f'runs{i}')),
+            'strike_rate': float(request.form.get(f'sr{i}')),
+            'HighestScore': float(request.form.get(f'HighestScore{i}')),
+            'hundreds': float(request.form.get(f'100s{i}')),
+            'fifties': float(request.form.get(f'50s{i}')),
+            'zeros': float(request.form.get(f'0s{i}')),
+            'average': float(request.form.get(f'average{i}'))
+        }
+        data.append(player)
+
+    # Save data to a JSON file
+    with open('player_stats.json', 'w') as f:
+        json.dump(data, f, indent=4)
+
+        # Load batsmen data from JSON file
+    with open('player_stats.json', 'r') as f:
+        batsmen = json.load(f)
+
+    # Parameters
+    NUM_BATSMEN = 3
+    POPULATION_SIZE = 10
+    NUM_GENERATIONS = 50
+    MUTATION_RATE = 0.1
+
+    def fitness(chromosome, batsmen):
+        # Define the fitness function based on multiple metrics
+        total_runs = sum(batsmen[i]['runs'] for i in chromosome)
+        total_highest_score = sum(batsmen[i]['HighestScore'] for i in chromosome)
+        total_strike_rate = sum(batsmen[i]['strike_rate'] for i in chromosome) / NUM_BATSMEN
+        total_100s = sum(batsmen[i]['hundreds'] for i in chromosome)
+        total_50s = sum(batsmen[i]['fifties'] for i in chromosome)
+        total_0s = sum(batsmen[i]['zeros'] for i in chromosome)
+        total_average = sum(batsmen[i]['average'] for i in chromosome) / NUM_BATSMEN
+
+        # Example weighting for fitness calculation
+        fitness_score = (total_runs * 1.5) + (total_highest_score) + (total_strike_rate * 2) + (total_100s * 3) + (total_50s * 1.5) - (total_0s * 2) + (total_average * 2)
+
+        return fitness_score
+
+    def create_chromosome(batsmen):
+        return random.sample(range(len(batsmen)), NUM_BATSMEN)
+
+    def crossover(parent1, parent2):
+        crossover_point = random.randint(1, NUM_BATSMEN - 1)
+        child1 = parent1[:crossover_point] + [i for i in parent2 if i not in parent1[:crossover_point]]
+        child2 = parent2[:crossover_point] + [i for i in parent1 if i not in parent2[:crossover_point]]
+        return child1, child2
+
+    def mutate(chromosome, batsmen):
+        if random.random() < MUTATION_RATE:
+            available_batsmen = [i for i in range(len(batsmen)) if i not in chromosome]
+            if available_batsmen:
+                idx = random.randint(0, NUM_BATSMEN - 1)
+                new_batsman = random.choice(available_batsmen)
+                chromosome[idx] = new_batsman
+
+    # Initialize population
+    population = [create_chromosome(batsmen) for _ in range(POPULATION_SIZE)]
+
+    # Main GA loop
+    for generation in range(NUM_GENERATIONS):
+        # Evaluate fitness
+        population = sorted(population, key=lambda x: fitness(x, batsmen), reverse=True)
+
+        # Selection
+        selected = population[:POPULATION_SIZE // 2]
+
+        # Crossover
+        offspring = []
+        for i in range(0, len(selected), 2):
+            if i + 1 < len(selected):
+                child1, child2 = crossover(selected[i], selected[i + 1])
+                offspring.append(child1)
+                offspring.append(child2)
+
+        # Mutation
+        for individual in offspring:
+            mutate(individual, batsmen)
+
+        # Create new population
+        population = selected + offspring
+
+    # Best solution
+    best_combination = max(population, key=lambda x: fitness(x, batsmen))
+    best_fitness = fitness(best_combination, batsmen)
+
+    # Convert IDs to names
+    best_combination_names = [batsmen[i]['name'] for i in best_combination]
+
+    # Redirect to summary page with results
+    return redirect(url_for('algorithm_summary', best_combination_names=best_combination_names, best_fitness=best_fitness))
+
+@app.route('/algorithm_summary')
+def algorithm_summary():
+    best_combination_names = request.args.getlist('best_combination_names')
+    best_fitness = request.args.get('best_fitness')
+
+    return render_template('algorithm_result.html', best_combination_names=best_combination_names, best_fitness=best_fitness)
+
+
+@app.route('/bowlerss', methods=['POST'])
+def bowlerss():
+    data = []
+    for i in range(1, 6):
+        player = {
+            'name': request.form.get(f'name{i}'),
+            'innings': float(request.form.get(f'innings{i}')),
+            'wickets': float(request.form.get(f'wickets{i}')),
+            'economy': float(request.form.get(f'economy{i}')),
+            'strike_rate': float(request.form.get(f'sr{i}')),
+            '4s': float(request.form.get(f'4s{i}')),
+            '5s': float(request.form.get(f'5s{i}')),
+            'hw': float(request.form.get(f'hw{i}')),
+            'average': float(request.form.get(f'average{i}'))
+        }
+        data.append(player)
+
+    # Save data to a JSON file
+    with open('player_stats1.json', 'w') as f:
+        json.dump(data, f, indent=4)
+    with open('player_stats1.json', 'r') as f:
+        bowlers = json.load(f)
+
+    # Parameters
+    NUM_BOWLERS = 2
+    POPULATION_SIZE = 10
+    NUM_GENERATIONS = 50
+    MUTATION_RATE = 0.1
+
+    def fitness(chromosome,bowlers):
+    # Define the fitness function based on multiple metrics
+        total_wickets = sum(bowlers[i]['wickets'] for i in chromosome)
+        total_economy = sum(bowlers[i]['economy'] for i in chromosome) / NUM_BOWLERS
+        total_sr = sum(bowlers[i]['strike_rate'] for i in chromosome) / NUM_BOWLERS
+        total_4w = sum(bowlers[i]['4s'] for i in chromosome)
+        total_5w = sum(bowlers[i]['5s'] for i in chromosome)
+        total_hw = sum(bowlers[i]['hw'] for i in chromosome)
+        total_average = sum(bowlers[i]['average'] for i in chromosome) / NUM_BOWLERS
+
+        # Example weighting for fitness calculation
+        fitness_score = (total_wickets * 2) - (total_economy) - (total_sr / 10) + (total_4w * 1.5) + (total_5w * 2) + (
+        total_hw) - (total_average / 10)
+    
+        return fitness_score
+    
+    def create_chromosome(bowlers):
+        return random.sample(range(len(bowlers)), NUM_BOWLERS)
+    
+    def crossover(parent1, parent2):
+        crossover_point = random.randint(1, NUM_BOWLERS - 1)
+        child1 = parent1[:crossover_point] + [i for i in parent2 if i not in parent1[:crossover_point]]
+        child2 = parent2[:crossover_point] + [i for i in parent1 if i not in parent2[:crossover_point]]
+        return child1, child2
+    
+    def mutate(chromosome,bowlers):
+        if random.random() < MUTATION_RATE:
+            idx = random.randint(0, NUM_BOWLERS - 1)
+            available_bowlers = [i for i in range(len(bowlers)) if i not in chromosome]
+            if available_bowlers:  # Ensure there are bowlers available to select
+                new_bowler = random.choice(available_bowlers)
+                chromosome[idx] = new_bowler
+    # Initialize population
+    population = [create_chromosome(bowlers) for _ in range(POPULATION_SIZE)]
+
+    # Main GA loop
+    for generation in range(NUM_GENERATIONS):
+        # Evaluate fitness
+        population = sorted(population, key=lambda chromosome: fitness(chromosome, bowlers), reverse=True)
+
+        # Selection
+        selected = population[:POPULATION_SIZE // 2]
+
+        # Crossover
+        offspring = []
+        for i in range(0, len(selected), 2):
+            if i + 1 < len(selected):
+                child1, child2 = crossover(selected[i], selected[i + 1])
+                offspring.append(child1)
+                offspring.append(child2)
+        # Mutation
+        for individual in offspring:
+            mutate(individual,bowlers)
+
+        # Create new population
+        population = selected + offspring
+    # Best solution
+    best_combination = max(population, key=lambda chromosome: fitness(chromosome, bowlers))
+    best_fitness = fitness(best_combination,bowlers)
+
+    best_combination_names = [bowlers[i]['name'] for i in best_combination]
+
+    # Redirect to summary page with results
+    return redirect(url_for('algorithm_summary1', best_combination_names=best_combination_names, best_fitness=best_fitness))
+
+@app.route('/algorithm_summary1')
+def algorithm_summary1():
+    best_combination_names = request.args.getlist('best_combination_names')
+    best_fitness = request.args.get('best_fitness')
+
+    return render_template('algorithm_result1.html', best_combination_names=best_combination_names, best_fitness=best_fitness)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -57,6 +57,17 @@
             cursor: pointer;
         }
     </style>
+    <script>
+        function validateForm() {
+            var name = document.getElementById('name').value;
+            var regex = /\d/;
+            if (regex.test(name)) {
+                alert("Name cannot contain numbers.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 <section>
@@ -64,7 +75,7 @@
         <div class="form-value">
             <h2 style="margin-left: -30px;">Baller Information</h2>
             <div class="scrollable-container">
-                <form action="{{ url_for('ballerT') }}" method="POST">
+                <form action="{{ url_for('ballerT') }}" method="POST" onsubmit="return validateForm()">
 
                     <div class="inputbox">
                         <input type="text" id="name" name="name" required>

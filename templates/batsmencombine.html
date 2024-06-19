@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/index2.css">
+    <title>Cricket Player Stats Form</title>
+    <style>
+        /* Inline CSS for demo purposes, move this to your CSS file */
+        .form-box {
+            width: 400px;
+            height: auto;
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(15px); /* Background blur for aesthetics */
+            margin: 20px auto; /* Center the form box */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add shadow for depth */
+        }
+
+
+        .inputbox {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .inputbox label {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            color: #ffffff; /* Darker label text color */
+            font-size: 0.9em; /* Adjust label font size */
+            pointer-events: none;
+            transition: .5s;
+        }
+
+
+        .form-box button[type="submit"]:hover {
+            background-color: darkviolet; /* Hover color */
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <form action="{{ url_for('batsmanss') }}" method="POST" class="form-grid">
+       
+        {% for i in range(1, 6) %}
+        <section>
+            <div class="form-box">
+                <div class="form-value">
+                    <h2 style="margin-left: -30px;">Batsmen Information {{i}}</h2>
+                    <div class="scrollable-container">
+        <div class="inputbox">
+            <input type="text" name="name{{ i }}" required>
+            <label>Name:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="innings{{ i }}"  required>
+            <label>Innings:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="not_outs{{ i }}"  required>
+            <label>Not Outs:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="runs{{ i }}"  required>
+            <label>Runs:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="HighestScore{{ i }}"  required>
+            <label>Highest Score:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="sr{{ i }}"  step="0.01" required>
+            <label>Strike Rate:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="100s{{ i }}"  required>
+            <label>Hundreds:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="50s{{ i }}"  required>
+            <label>Fifties:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="0s{{ i }}"  required>
+            <label>Zeros:</label>
+        </div>
+
+        <div class="inputbox">
+            <input type="number" name="average{{ i }}" step="0.01" required>
+            <label>Average:</label>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+
+        {% endfor %}
+        <button type="submit" style="color: blueviolet;">Submit</button>
+    </form>
+
+</body>
+</html>

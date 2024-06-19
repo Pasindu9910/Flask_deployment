@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="static/index3.css">
+  <link rel="icon" href="static/Cricknow.png" type="image/png">
+</head>
+<body>
+    <div class="blur-bg">
+        <div class="container">
+          <div class="content">
+            <h1>Batsmen Combination</h1>
+
+            <h2>Best Combination of Batsmen:</h2>
+            <ul>
+                {% for name in best_combination_names %}
+                    <li>{{ name }}</li>
+                {% endfor %}
+            </ul>
+        
+            <h2>Best Fitness Score:</h2>
+            <p>{{ best_fitness|int }}</p>
+          </div>
+        </div>
+    </div>
+</body>

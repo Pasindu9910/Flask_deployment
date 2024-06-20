@@ -44,7 +44,7 @@
                 pointer-events: none;
                 transition: .5s;
         }
-        input[type="submit"] {
+        input[type="submit"],button[type="button"] {
             width: 200px;
             height: 40px;
             margin: 20px 0;
@@ -72,7 +72,15 @@
                 alert("Name cannot contain numbers.");
                 return false;
             }
+            if(matches_played === 0 && Innings === 0 && balls === 0 &&
+            run === 0 && wickets === 0 && s4 === 0 && s5 === 0 && HighestWickets === 0 && RunsGiven === 0){
+                alert("Please input valid data. All fields cannot be zero.");
+                return false;
+            }
             return true;
+        }
+        function refreshPage() {
+            window.location.reload();
         }
     </script>
 </head>
@@ -140,9 +148,9 @@
                         <input type="number" id="rg" name="rg" min="0" required>
                         <label for="rg">Given runs for that inning:</label>
                     </div>
-
                     <input type="submit" name="PREDICT" value="BOWLER SELECTION" style="margin-left: 50px;">
                 </form>
+                <button type="button" onclick="refreshPage()" style="margin-left: 50px;">RESET</button>
             </div>
         </div>
     </div>

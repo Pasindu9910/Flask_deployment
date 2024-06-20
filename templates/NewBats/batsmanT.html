@@ -28,12 +28,12 @@
         }
         .form-value {
             width: 370px;
-            margin-left: 40px; 
+            margin-left: 40px;
         }
         .inputbox {
             margin-bottom: 15px;
             position: relative;
-        } 
+        }
         .inputbox label {
                 position: absolute;
                 top: 50%;
@@ -44,7 +44,7 @@
                 pointer-events: none;
                 transition: .5s;
         }
-        input[type="submit"] {
+        input[type="submit"],button[type="button"] {
             width: 200px;
             height: 40px;
             margin: 20px 0;
@@ -58,7 +58,7 @@
      <script>
         function validateForm() {
             var name = document.getElementById('name').value;
-            var regex = /\d/;
+            var regex = /^[a-zA-Z\s]+$/;
             let matches_played = parseFloat(document.forms["batsmanForm"]["matches"].value);
             let Innings = parseFloat(document.forms["batsmanForm"]["innings"].value);
             let notouts = parseFloat(document.forms["batsmanForm"]["no"].value);
@@ -68,45 +68,16 @@
             let Centuries = parseFloat(document.forms["batsmanForm"]["cn"].value);
             let HalfCenturies = parseFloat(document.forms["batsmanForm"]["hcn"].value);
             let Ducks = parseFloat(document.forms["batsmanForm"]["dk"].value);
-            if (regex.test(name)) {
+            if (!regex.test(name)) {
                 alert("Name cannot contain numbers.");
                 return false;
             }
-            if(runs === 0 && ballsFaced === 0 && highestScore === 0 &&
-            fours === 0 && sixes === 0 && fifties === 0 && hundreds === 0){
-                alert("Please input valid data. All fields cannot be zero.");
-                return false;
-            }
-            if(name===""){
-                alert("Please provide a name");
+            if(matches_played === 0){
+                alert("matches_played cannot be zero");
                 return false;
             }
             if(Innings===0){
                 alert("Innings cannot be zero");
-                return false;
-            }
-            if(notouts>Innings){
-                alert("Not outs cannot be higher than innings");
-                return false;
-            }
-            if(Innings>matches_played){
-                alert("Innings should be less than or equal to matches played");
-                return false;
-            }
-            if(Inning<(notouts+Ducks)){
-                alert("Innings should be greater than the "+(notouts+Ducks));
-                return false;
-            }
-            if(Runs<HighScore){
-                alert("Runs should be greater than or equal to high score!");
-                return false;
-            }
-            if(BallFaced === 1 && runs !== HighScore){
-                alert("High score must be the same value as runs when balls faced is 1");
-                return false;
-            }
-            if(BallFaced>300){
-                alert("Ball faced should be less than 300");
                 return false;
             }
             if(Centuries*100>Runs){
@@ -117,15 +88,75 @@
                 alert("Half Centuries must be Lower or equal to runs");
                 return false;
             }
+            if(Runs === 0 && ballsFaced === 0 && highestScore === 0 &&
+            fours === 0 && sixes === 0 && fifties === 0 && hundreds === 0){
+                alert("Please input valid data. All fields cannot be zero.");
+                return false;
+            }
+            if(Ducks>Innings | Ducks>BallFaced){
+                alert("Check the inputs for ducks with innings and ballfaced");
+                return false;
+            }
+            if(BallFaced === 1 && runs !== HighScore){
+                alert("High score must be the same value as runs when balls faced is 1");
+                return false;
+            }
+            if(Runs/BallFaced>HighScore){
+                alert("High score is wrong");
+                return false;
+            }
+            if(HighScore>Runs){
+                alert("High score cannot be greater than total runs");
+                return false;
+            }
+            if(HighScore<100 && Centuries>0){
+                alert("Centuries cannot be grater than 0 if high Score is less than 100");
+                return false;
+            }
+            if(HighScore<50 && HalfCenturies>0){
+                alert("Half centuries cannot be grater than 0 if high Score is less than 50");
+                return false;
+            }
+            if((Centuries*100+HalfCenturies*50)>Runs){
+                alert("Addition of centuries and half centuries cannot exceed runs");
+                return false;
+            }
+            if(name===""){
+                alert("Please provide a name");
+                return false;
+            }
+            if(notouts>Innings){
+                alert("Not outs cannot be higher than innings");
+                return false;
+            }
+            if(Innings>matches_played){
+                alert("Innings should be less than or equal to matches played");
+                return false;
+            }
+            if (BallFaced === 1 && Runs !== HighScore) {
+                alert("High score must be the same value as runs when balls faced is 1");
+                return false;
+            }
+            if(Inning<(notouts+Ducks)){
+                alert("Innings should be greater than the "+(notouts+Ducks));
+                return false;
+            }
+            if(Runs<HighScore){
+                alert("Runs should be greater than or equal to high score!");
+                return false;
+            }
+            if(BallFaced>300){
+                alert("Ball faced should be less than 300");
+                return false;
+            }
             if((Centuries+HalfCenturies)>Innings){
                 alert("The sum of Centuries and Half centuries should not be exceed innings");
                 return false;
             }
-            if(Ducks>Innings){
-                alert("Ducks be less than or equal to the number of innings.");
-                return false;
-            }
             return true;
+        }
+        function refreshPage() {
+            window.location.reload();
         }
     </script>
 </head>
@@ -139,13 +170,13 @@
     <form name="batsmanForm" action="{{ url_for('batsmanT') }}" method="POST" onsubmit="return validateForm()">
 
         <div class="inputbox">
-        
-        <input type="text" id="name" name="name" required>
+
+        <input type="text" id="name" name="name" pattern="[a-zA-Z\s]+" oninput="this.setCustomValidity('')" required>
         <label for="name">Name:</label>
         </div>
 
         <div class="inputbox">
-	
+
         <select id="region" name="region" style="margin-left: 200px;" required>
             <option value="0">Asia</option>
             <option value="1">Out Side Asia</option>
@@ -154,13 +185,13 @@
         </div>
 
         <div class="inputbox">
-        
+
         <input type="number" id="matches" name="matches" min="0" required>
         <label for="matches">Number of Matches Played:</label>
         </div>
 
         <div class="inputbox">
-	
+
         <input type="number" id="innings" name="innings" min="0" required>
         <label for="innings">Innings:</label>
         </div>
@@ -200,15 +231,16 @@
         <input type="number" id="hcn" name="hcn" min="0" required>
         <label for="hcn">Total Half Centuries:</label>
         </div>
-        
+
         <div class="inputbox">
 
         <input type="number" id="dk" name="dk" pattern="[0-9]*[.,]?[0-9]+" min="0" required>
         <label for="dk">Total Ducks:</label>
         </div>
-	
+
         <input type="submit" name="PREDICT" value="BATSMAN SELECTION" style="margin-left: 50px;">
     </form>
+    <button type="button" onclick="refreshPage()" style="margin-left: 50px;">RESET</button>
         </div>
         </div>
 </section>

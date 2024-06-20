@@ -14,7 +14,7 @@ with open('training_model.pkl', 'rb') as file:
 with open('training_model1.pkl', 'rb') as file:
     loaded_model1, loaded_le1 = pickle.load(file)
 model3 = pickle.load(open('baller.pkl', 'rb'))
-model4 = pickle.load(open('batsman.pkl', 'rb'))
+model4 = pickle.load(open('random_forest_model.pkl', 'rb'))
 model6 = pickle.load(open('winning.pkl', 'rb'))
 
 app = Flask(__name__)
@@ -241,7 +241,7 @@ def delete_feedback(feedback_id):
     
     # Redirect back to the same page or the feedback list page
     return redirect(url_for('admin'))
-
+################################################################################################
 #predicting bowler training   
 @app.route('/predict2', methods=['POST'])
 def prediction2():
@@ -270,7 +270,7 @@ def prediction2():
     elif prediction == "Wicket-taking and Attack":
        return render_template('bowlers/module4.html')
 
-
+#####################################################################################################
 #predicting batsman training 
 @app.route('/predict', methods=['POST'])
 def prediction():
@@ -300,7 +300,7 @@ def prediction():
     elif prediction == "General Training":
        return render_template('batsmen/General Training.html')
 
-
+#############################################################################################
 #predicting batsman performance value 
 @app.route('/predict3', methods=['POST'])
 def ballerT():
@@ -340,7 +340,7 @@ def show_predictions1():
     predictions = session.get('predictions', [])
     return render_template('NewBowler/ballerData.html', predictions=predictions)
 
-
+#####################################################################################
 #predicting bowlers performance value 
 @app.route('/predict4', methods=['POST'])
 def batsmanT():
@@ -351,21 +351,33 @@ def batsmanT():
     data5 = float(request.form['bf'])
     data6 = float(request.form['runs'])
     data7 = float(request.form['hs'])
-    data8 = (data6/data5)*100 if data5 != 0 else 0
+    data12 = (data6 / data3)
+    data8 = (data6 / data5) * 100 if data5 != 0 else 0
     data9 = float(request.form['cn'])
     data10 = float(request.form['hcn'])
     data11 = float(request.form['dk'])
     name = request.form['name']
-    arr = np.array([[data1,data2,data3,data4,data5,data6,data7,data8,data9,data10,data11]])
+    
+    arr = np.array([[data1, data2, data3, data4, data6, data7, data12, data8, data9, data10, data11]])
     pred = model4.predict(arr)
-    formatted_pred = round(pred[0], 2)
+    
+    # Convert prediction to player type
+    pred_value = pred[0]
+    if pred_value == 0:
+        player_type = "Weak player"
+    elif pred_value == 1:
+        player_type = "Moderate player"
+    else:
+        player_type = "Best player"
+    
     if 'predictions' not in session:
         session['predictions'] = []
     
-    session['predictions'].append({'name': name, 'prediction': formatted_pred})
+    session['predictions'].append({'name': name, 'prediction': player_type})
     session.modified = True
     
     return redirect(url_for('show_predictions'))
+
 
 
 @app.route('/clear_predictions', methods=['POST'])
@@ -396,7 +408,7 @@ def prediction3():
 
     return render_template('Winnerpredresult.html', data0=data0, data1=data1, prediction=pred[0])
 
-
+############################################################################################
 @app.route('/batsmanss', methods=['POST'])
 def batsmanss():
     data = []

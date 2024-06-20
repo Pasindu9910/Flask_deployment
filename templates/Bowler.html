@@ -119,13 +119,16 @@
 
         return true;
     }
+    function refreshPage() {
+        window.location.reload();
+    }
   </script>
 </head>
 <body>
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form name="bowlersForm" method="POST" action="{{url_for('prediction2')}}" onsubmit="return validateForm()">
+                <form name="bowlersForm" method="POST" action="{{url_for('prediction2')}}" onsubmit="validateForm()">
                     <h2>BOWLER DATA</h2>
                     <div class="inputbox">
                         <input type="number" name="Innings" min="0" required>
@@ -163,8 +166,9 @@
                         <input type="number" name="Dots" min="0" required>
                         <label>Dots</label>
                     </div>
-                    <input type="submit" name="PREDICT" value="BOWLER TRAINING" style="width: 200px;height: 40px;margin-left: 50px;border-radius: 15px;background-color:blueviolet;">
+                    <input type="submit" name="PREDICT" value="BOWLER TRAINING" style="width: 200px;height: 40px;margin-left: 50px;border-radius: 15px;background-color:rgb(5, 187, 54);">
                 </form>
+                <button onclick="refreshPage()" style="width: 200px; height: 40px; margin-left: 50px; border-radius: 15px; background-color: rgb(158, 12, 12); margin-top: 10px;">REFRESH</button>
             </div>
         </div>
     </section>

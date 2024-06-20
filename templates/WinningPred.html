@@ -47,7 +47,8 @@ function validateForm() {
                 <form method="POST" action="{{url_for('prediction3')}}" onsubmit="return validateForm()">
                     <h2>Winning Prediction</h2>
                     <div class="inputbox">
-                        <select id="team1" name="team1" onchange="updateSecondDropdown()">
+                        <label for="options">First Inning Team :</label>
+                        <select id="team1" name="team1" onchange="updateSecondDropdown()" style="width: 100px;margin-left: 200px;">
                             <option value="1">SRI LANKA </option>
                             <option value="2">NETHERLANDS </option>
                             <option value="3">ZIMBABWE </option>
@@ -74,13 +75,12 @@ function validateForm() {
                             <option value="24">ASIA XI </option>
                             <option value="25">NAMIBIA </option>
                             <option value="26">EAST (AND CENTRAL) AFRICA </option>
-                            <option value="27">AFRICA XI </option>
-                            
-                            
+                            <option value="27">AFRICA XI </option> 
                         </select>
                     </div>
                     <div class="inputbox">
-                        <select id="team2" name="team2" onchange="updateSecondDropdown()">
+                        <label for="options">Second Inning Team:</label>
+                        <select id="team2" name="team2" onchange="updateSecondDropdown()" style="width: 100px;margin-left: 200px;">
                             <option value="1">SRI LANKA </option>
                             <option value="2">NETHERLANDS </option>
                             <option value="3">ZIMBABWE </option>

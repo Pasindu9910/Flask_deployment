@@ -25,8 +25,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-
-
         }
         .form-value {
             width: 370px;
@@ -61,8 +59,70 @@
         function validateForm() {
             var name = document.getElementById('name').value;
             var regex = /\d/;
+            let matches_played = parseFloat(document.forms["batsmanForm"]["matches"].value);
+            let Innings = parseFloat(document.forms["batsmanForm"]["innings"].value);
+            let notouts = parseFloat(document.forms["batsmanForm"]["no"].value);
+            let Runs = parseFloat(document.forms["batsmanForm"]["runs"].value);
+            let HighScore = parseFloat(document.forms["batsmanForm"]["hs"].value);
+            let BallFaced = parseFloat(document.forms["batsmanForm"]["bf"].value);
+            let Centuries = parseFloat(document.forms["batsmanForm"]["cn"].value);
+            let HalfCenturies = parseFloat(document.forms["batsmanForm"]["hcn"].value);
+            let Ducks = parseFloat(document.forms["batsmanForm"]["dk"].value);
             if (regex.test(name)) {
                 alert("Name cannot contain numbers.");
+                return false;
+            }
+            if(runs === 0 && ballsFaced === 0 && highestScore === 0 &&
+            fours === 0 && sixes === 0 && fifties === 0 && hundreds === 0){
+                alert("Please input valid data. All fields cannot be zero.");
+                return false;
+            }
+            if(name===""){
+                alert("Please provide a name");
+                return false;
+            }
+            if(Innings===0){
+                alert("Innings cannot be zero");
+                return false;
+            }
+            if(notouts>Innings){
+                alert("Not outs cannot be higher than innings");
+                return false;
+            }
+            if(Innings>matches_played){
+                alert("Innings should be less than or equal to matches played");
+                return false;
+            }
+            if(Inning<(notouts+Ducks)){
+                alert("Innings should be greater than the "+(notouts+Ducks));
+                return false;
+            }
+            if(Runs<HighScore){
+                alert("Runs should be greater than or equal to high score!");
+                return false;
+            }
+            if(BallFaced === 1 && runs !== HighScore){
+                alert("High score must be the same value as runs when balls faced is 1");
+                return false;
+            }
+            if(BallFaced>300){
+                alert("Ball faced should be less than 300");
+                return false;
+            }
+            if(Centuries*100>Runs){
+                alert("Centuries must be Lower or equal to runs");
+                return false;
+            }
+            if(HalfCenturies*50>Runs){
+                alert("Half Centuries must be Lower or equal to runs");
+                return false;
+            }
+            if((Centuries+HalfCenturies)>Innings){
+                alert("The sum of Centuries and Half centuries should not be exceed innings");
+                return false;
+            }
+            if(Ducks>Innings){
+                alert("Ducks be less than or equal to the number of innings.");
                 return false;
             }
             return true;
@@ -76,7 +136,7 @@
         <div class="form-value">
 
     <h2 style="margin-left: -30px;">Batsman Information</h2>
-    <form action="{{ url_for('batsmanT') }}" method="POST" onsubmit="return validateForm()">
+    <form name="batsmanForm" action="{{ url_for('batsmanT') }}" method="POST" onsubmit="return validateForm()">
 
         <div class="inputbox">
         
@@ -95,61 +155,55 @@
 
         <div class="inputbox">
         
-        <input type="number" id="matches" name="matches" required>
+        <input type="number" id="matches" name="matches" min="0" required>
         <label for="matches">Number of Matches Played:</label>
         </div>
 
         <div class="inputbox">
 	
-        <input type="number" id="innings" name="innings" required>
+        <input type="number" id="innings" name="innings" min="0" required>
         <label for="innings">Innings:</label>
         </div>
 
         <div class="inputbox">
 
-        <input type="number" id="no" name="no" required>
+        <input type="number" id="no" name="no" min="0" required>
         <label for="no">Number of notouts:</label>
         </div>
 
         <div class="inputbox">
 
-        <input type="number" id="runs" name="runs" required>
+        <input type="number" id="runs" name="runs" min="0" required>
         <label for="runs">Runs Scored:</label>
         </div>
 
         <div class="inputbox">
 
-        <input type="number" id="hs" name="hs" required>
+        <input type="number" id="hs" name="hs" min="0" required>
         <label for="hs">Highest Score:</label>
         </div>
 
         <div class="inputbox">
 
-        <input type="number" id="bf" name="bf" pattern="[0-9]*[.,]?[0-9]+" required>
+        <input type="number" id="bf" name="bf" pattern="[0-9]*[.,]?[0-9]+" min="0" required>
         <label for="bf">Ball Faced:</label>
         </div>
 
         <div class="inputbox">
 
-        <input type="number" id="sr" name="sr" required>
-        <label for="sr">Strike Rate:</label>
-        </div>
-
-        <div class="inputbox">
-
-        <input type="number" id="cn" name="cn" required>
+        <input type="number" id="cn" name="cn" min="0" required>
         <label for="cn">Total Centuries:</label>
         </div>
 
         <div class="inputbox">
 
-        <input type="number" id="hcn" name="hcn" required>
+        <input type="number" id="hcn" name="hcn" min="0" required>
         <label for="hcn">Total Half Centuries:</label>
         </div>
         
         <div class="inputbox">
 
-        <input type="number" id="dk" name="dk" required>
+        <input type="number" id="dk" name="dk" pattern="[0-9]*[.,]?[0-9]+" min="0" required>
         <label for="dk">Total Ducks:</label>
         </div>
 	

@@ -156,7 +156,6 @@ def Login():
             alert_script = f'<script>alert("Incorrect password. Please try again."); window.location.href = "{url_for("man")}";</script>'
             return alert_script
 
-
 @app.route('/AdminLogin', methods=['POST','GET'])
 def AdminLogin():
     email = request.form['email']
@@ -216,6 +215,7 @@ def feedback():
         alert_script = "<script>alert('Something went wrong'); window.history.back();</script>"
         return alert_script
 
+
 @app.route('/delete_user/<int:user_id>', methods=['POST'])
 def delete_user(user_id):
     # Fetch the user by ID
@@ -227,6 +227,7 @@ def delete_user(user_id):
     
     # Redirect back to the dashboard or Admin.html page
     return redirect(url_for('admin'))
+
 
 @app.route('/delete_feedback/<int:feedback_id>', methods=['POST'])
 def delete_feedback(feedback_id):
@@ -241,7 +242,6 @@ def delete_feedback(feedback_id):
     # Redirect back to the same page or the feedback list page
     return redirect(url_for('admin'))
 
-
 #predicting bowler training   
 @app.route('/predict2', methods=['POST'])
 def prediction2():
@@ -250,8 +250,8 @@ def prediction2():
     data2 = float(request.form['Runs'])
     data3 = float(request.form['Wickets'])
     data4 = float(data2/data1) if data1 != 0 else 0
-    data5 = float(data2/data3) if data1 != 0 else 0
-    data6 = float(data1*6/data3) if data1 != 0 else 0
+    data5 = float(data2/data3) if data3 != 0 else 0
+    data6 = float(data1*6/data3) if data3 != 0 else 0
     data7 = float(request.form['4wickets'])
     data8 = float(request.form['5wickets'])
     data9 = float(request.form['4s'])
@@ -267,9 +267,9 @@ def prediction2():
        return render_template('bowlers/module2.html')
     if prediction == "Precision and Consistency":
        return render_template('bowlers/module3.html')
-    if prediction == "Wicket-taking and Attack":
+    elif prediction == "Wicket-taking and Attack":
        return render_template('bowlers/module4.html')
-    
+
 
 #predicting batsman training 
 @app.route('/predict', methods=['POST'])
@@ -297,10 +297,11 @@ def prediction():
         return render_template('batsmen/Experience and Control.html')
     if prediction == "Fundamentals and Basics":
        return render_template('batsmen/Fundamentals and Basics.html')
-    if prediction == "General Training":
+    elif prediction == "General Training":
        return render_template('batsmen/General Training.html')
 
 
+#predicting batsman performance value 
 @app.route('/predict3', methods=['POST'])
 def ballerT():
     data1 = float(request.form['region'])
@@ -309,8 +310,8 @@ def ballerT():
     data4 = float(request.form['balls'])
     data5 = float(request.form['runs'])
     data6 = float(request.form['wickets'])
-    data7 = float(request.form['econ'])
-    data8 = float(request.form['sr'])
+    data7 = round(data5/round(data4/6,1),1) if data4 != 0 else 0
+    data8 = (data4/data6) if data6 != 0 else 0
     data9 = float(request.form['4s'])
     data10 = float(request.form['5s'])
     data11 = float(request.form['hw'])
@@ -327,16 +328,20 @@ def ballerT():
     
     return redirect(url_for('show_predictions1'))
 
+
 @app.route('/clear_predictions1', methods=['POST'])
 def clear_predictions1():
     session.pop('predictions', None)
     return redirect(url_for('show_predictions1'))
+
 
 @app.route('/show_predictions1', methods=['GET'])
 def show_predictions1():
     predictions = session.get('predictions', [])
     return render_template('NewBowler/ballerData.html', predictions=predictions)
 
+
+#predicting bowlers performance value 
 @app.route('/predict4', methods=['POST'])
 def batsmanT():
     data1 = float(request.form['region'])
@@ -346,12 +351,12 @@ def batsmanT():
     data5 = float(request.form['bf'])
     data6 = float(request.form['runs'])
     data7 = float(request.form['hs'])
-    data8 = float(request.form['sr'])
+    data8 = (data6/data5)*100 if data5 != 0 else 0
     data9 = float(request.form['cn'])
     data10 = float(request.form['hcn'])
     data11 = float(request.form['dk'])
     name = request.form['name']
-    arr = np.array([[data1, data2, data3, data4,data5,data6,data7,data8,data9,data10,data11]])
+    arr = np.array([[data1,data2,data3,data4,data5,data6,data7,data8,data9,data10,data11]])
     pred = model4.predict(arr)
     formatted_pred = round(pred[0], 2)
     if 'predictions' not in session:
@@ -362,20 +367,21 @@ def batsmanT():
     
     return redirect(url_for('show_predictions'))
 
+
 @app.route('/clear_predictions', methods=['POST'])
 def clear_predictions():
     session.pop('predictions', None)
     return redirect(url_for('show_predictions'))
+
 
 @app.route('/show_predictions', methods=['GET'])
 def show_predictions():
     predictions = session.get('predictions', [])
     return render_template('NewBats/batsmanData.html', predictions=predictions)
 
-
 ########################################################################################
 
-
+#winning prediction
 @app.route('/predict6', methods=['POST'])
 def prediction3():
     data0 = float(request.form['team1'])
@@ -389,7 +395,6 @@ def prediction3():
     pred = model6.predict(arr)
 
     return render_template('Winnerpredresult.html', data0=data0, data1=data1, prediction=pred[0])
-
 
 
 @app.route('/batsmanss', methods=['POST'])

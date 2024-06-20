@@ -25,8 +25,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-
-
         }
         .form-value {
             width: 370px;
@@ -60,6 +58,15 @@
     <script>
         function validateForm() {
             var name = document.getElementById('name').value;
+            let matches_played = parseFloat(document.forms["bowlerForm"]["matches"].value);
+            let Innings = parseFloat(document.forms["bowlerForm"]["innings"].value);
+            let balls = parseFloat(document.forms["bowlerForm"]["balls"].value);
+            let run = parseFloat(document.forms["bowlerForm"]["runs"].value);
+            let wickets = parseFloat(document.forms["bowlerForm"]["wickets"].value);
+            let s4 = parseFloat(document.forms["bowlerForm"]["4s"].value);
+            let s5 = parseFloat(document.forms["bowlerForm"]["5s"].value);
+            let HighestWickets = parseFloat(document.forms["bowlerForm"]["hw"].value);
+            let RunsGiven = parseFloat(document.forms["bowlerForm"]["rg"].value);
             var regex = /\d/;
             if (regex.test(name)) {
                 alert("Name cannot contain numbers.");
@@ -75,7 +82,7 @@
         <div class="form-value">
             <h2 style="margin-left: -30px;">Baller Information</h2>
             <div class="scrollable-container">
-                <form action="{{ url_for('ballerT') }}" method="POST" onsubmit="return validateForm()">
+                <form name = "bowlerForm" action="{{ url_for('ballerT') }}" method="POST" onsubmit="return validateForm()">
 
                     <div class="inputbox">
                         <input type="text" id="name" name="name" required>
@@ -96,52 +103,41 @@
                     </div>
 
                     <div class="inputbox">
-                        <input type="number" id="innings" name="innings" required>
+                        <input type="number" id="innings" name="innings" min="0" required>
                         <label for="innings">Innings:</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="number" id="balls" name="balls" required>
+                        <input type="number" id="balls" name="balls" min="0" required>
                         <label for="balls">Number of Balls Bowled:</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="number" id="runs" name="runs" required>
+                        <input type="number" id="runs" name="runs" min="0" required>
                         <label for="runs">Runs Given:</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="number" id="wickets" name="wickets" required>
+                        <input type="number" id="wickets" name="wickets" min="0" required>
                         <label for="wickets">Wickets Taken:</label>
                     </div>
-
                     <div class="inputbox">
-                        <input type="number" id="econ" name="econ" required>
-                        <label for="econ">Economy of the Bowler:</label>
-                    </div>
-
-                    <div class="inputbox">
-                        <input type="number" id="sr" name="sr" required>
-                        <label for="sr">Strike Rate:</label>
-                    </div>
-
-                    <div class="inputbox">
-                        <input type="number" id="4s" name="4s" required>
+                        <input type="number" id="4s" name="4s" min="0" required>
                         <label for="4s">Number of 4 wickets:</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="number" id="5s" name="5s" required>
+                        <input type="number" id="5s" name="5s" min="0" required>
                         <label for="5s">Number of 5 wickets:</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="number" id="hw" name="hw" required>
+                        <input type="number" id="hw" name="hw" min="0" required>
                         <label for="hw">Highest wickets for an inning:</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="number" id="rg" name="rg" required>
+                        <input type="number" id="rg" name="rg" min="0" required>
                         <label for="rg">Given runs for that inning:</label>
                     </div>
 
